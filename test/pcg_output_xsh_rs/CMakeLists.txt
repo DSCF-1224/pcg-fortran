@@ -5,10 +5,11 @@
 # $ time make ..
 # $ time build/test.exe
 # $ cd -
+# $ ./exe_diff.sh
 
 # How to run (1 line)
-# $ ./reset_build.sh && cd b* && time cmake -DCMAKE_BUILD_TYPE=Debug .. && time make && time ./test.exe && cd -
-# $ ./reset_build.sh && cd b* && time cmake -DCMAKE_BUILD_TYPE=Release .. && time make && time ./test.exe && cd -
+# $ ./reset_build.sh && cd b* && time cmake -DCMAKE_BUILD_TYPE=Debug .. && time make && time ./test.exe && cd - && ./exe_diff.sh
+# $ ./reset_build.sh && cd b* && time cmake -DCMAKE_BUILD_TYPE=Release .. && time make && time ./test.exe && cd - && ./exe_diff.sh
 
 cmake_minimum_required(VERSION 3.0)
 
