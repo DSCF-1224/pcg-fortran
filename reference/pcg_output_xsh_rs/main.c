@@ -7,7 +7,7 @@ int test_pcg_output_xsh_rs_16_8(void)
     FILE *fp;
 
     // open a file to save the reference data
-    fp = fopen("./uint8_t.dat", "w");
+    fp = fopen("./16_8.dat", "w");
 
     // judge whether or not opening the file has succeeded
     if (!fp)

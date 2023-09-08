@@ -24,6 +24,7 @@ $(TARGET): $(OBJS)
 
 clean:
 	rm -f ./*.d
+	rm -f ./*.dat
 	rm -f ./*.o
 	rm -f $(TARGET)
 
