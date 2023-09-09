@@ -35,6 +35,19 @@ module pcg_fortran
 
         end function pcg_output_xsh_rs_32_16
 
+
+
+        !> Output function: XHS RS
+        module pure elemental function pcg_output_xsh_rs_64_32(state) result(xsh_rs)
+
+            !> A dummy argument for this FUNCTION
+            integer(int64), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int32) :: xsh_rs
+
+        end function pcg_output_xsh_rs_64_32
+
     end interface pcg_output_xsh_rs
 
 
