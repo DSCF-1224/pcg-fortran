@@ -1,7 +1,7 @@
 CXX    := gcc
 CFLAGS := -std=c99 -Wall -Wextra -MMD -MP -I..
 TARGET := ./test.exe
-OBJS   := ./pcg-output-8.o ./pcg-output-16.o ./main.o
+OBJS   := ./pcg-output-8.o ./pcg-output-16.o ./pcg-output-32.o ./main.o
 
 all: $(TARGET)
 
