@@ -73,7 +73,7 @@ module pcg_fortran
     interface pcg_rotr
 
         !> Rotate helper function
-        module pure elemental function pcg_rotr_16_8(value_, rot) result(rotr)
+        module pure elemental function pcg_rotr_8(value_, rot) result(rotr)
 
             !> A dummy argument for this FUNCTION
             integer(int8), intent(in) :: value_
@@ -84,7 +84,7 @@ module pcg_fortran
             !> The return value of this FUNCTION
             integer(int8) :: rotr
 
-        end function pcg_rotr_16_8
+        end function pcg_rotr_8
 
     end interface pcg_rotr
 
