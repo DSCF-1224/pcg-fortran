@@ -17,9 +17,16 @@ submodule (pcg_fortran) pcg_output_xsh_rr_implementation
 
 
 
+    module procedure pcg_output_xsh_rr_64_32
+        xsh_rr = pcg_rotr( int(shiftr(ieor(shiftr(state, 18), state), 27), int32), shiftr(state, 59) )
+    end procedure pcg_output_xsh_rr_64_32
+
+
+
     module procedure test_pcg_output_xsh_rr
         call test_pcg_output_xsh_rr_16_8
         call test_pcg_output_xsh_rr_32_16
+        call test_pcg_output_xsh_rr_64_32
     end procedure test_pcg_output_xsh_rr
 
 
@@ -115,5 +122,45 @@ submodule (pcg_fortran) pcg_output_xsh_rr_implementation
         close(write_unit)
 
     end subroutine test_pcg_output_xsh_rr_32_16
+
+
+
+    subroutine test_pcg_output_xsh_rr_64_32
+
+        !> A local variable for this SUBROUTINE
+        !> The input value for the target of this test
+        integer(int64) :: state
+
+        !> A local variable for this SUBROUTINE
+        !> The device number to output the result of this test
+        integer :: write_unit
+
+        ! open the file to save the result of this test
+        open( &!
+            newunit = write_unit   , &!
+            file    = './64_32.dat' , &!
+            action  = 'write'      , &!
+            status  = 'replace'      &!
+        )
+
+        ! write the results of this test
+        state = 1_int64
+
+        do
+
+            write(write_unit, '(I0,1X,I0)') &!
+            &   state, &!
+            &   pcg_output_xsh_rr(state)
+
+            if (state .lt. 0_int64) exit
+
+            state = state + state
+
+        end do
+
+        ! close the used file
+        close(write_unit)
+
+    end subroutine test_pcg_output_xsh_rr_64_32
 
 end submodule pcg_output_xsh_rr_implementation

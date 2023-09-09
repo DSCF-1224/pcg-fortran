@@ -36,6 +36,19 @@ module pcg_fortran
 
         end function pcg_output_xsh_rr_32_16
 
+
+
+        !> Output function: XSH RR
+        module pure elemental function pcg_output_xsh_rr_64_32(state) result(xsh_rr)
+
+            !> A dummy argument for this FUNCTION
+            integer(int64), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int32) :: xsh_rr
+
+        end function pcg_output_xsh_rr_64_32
+
     end interface pcg_output_xsh_rr
 
 
@@ -114,6 +127,22 @@ module pcg_fortran
             integer(int16) :: rotr
 
         end function pcg_rotr_16
+
+
+
+        !> Rotate helper function
+        module pure elemental function pcg_rotr_32(value_, rot) result(rotr)
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: value_
+
+            !> A dummy argument for this FUNCTION
+            integer(int64), intent(in) :: rot
+
+            !> The return value of this FUNCTION
+            integer(int32) :: rotr
+
+        end function pcg_rotr_32
 
     end interface pcg_rotr
 
