@@ -5,5 +5,6 @@ add_library(
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_rxs_m_xs_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsh_rr_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsh_rs_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsl_rr_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_rotr_implementation.f90
 )
