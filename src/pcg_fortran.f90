@@ -11,7 +11,7 @@ module pcg_fortran
 
     interface pcg_output_xsh_rs
 
-        !> Output function: XHS RS
+        !> Output function: XSH RS
         module pure elemental function pcg_output_xsh_rs_16_8(state) result(xsh_rs)
 
             !> A dummy argument for this FUNCTION
@@ -24,7 +24,7 @@ module pcg_fortran
 
 
 
-        !> Output function: XHS RS
+        !> Output function: XSH RS
         module pure elemental function pcg_output_xsh_rs_32_16(state) result(xsh_rs)
 
             !> A dummy argument for this FUNCTION
@@ -37,7 +37,7 @@ module pcg_fortran
 
 
 
-        !> Output function: XHS RS
+        !> Output function: XSH RS
         module pure elemental function pcg_output_xsh_rs_64_32(state) result(xsh_rs)
 
             !> A dummy argument for this FUNCTION
