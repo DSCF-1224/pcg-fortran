@@ -5,8 +5,65 @@ module pcg_fortran
     implicit none
 
     private
+    public  :: test_pcg_output_rxs_m_xs
     public  :: test_pcg_output_xsh_rr
     public  :: test_pcg_output_xsh_rs
+
+
+
+    interface pcg_output_rxs_m_xs
+
+        !> Output function: RXS M XS
+        module pure elemental function pcg_output_rxs_m_xs_8_8(state) result(rxs_m_xs)
+
+            !> A dummy argument for this FUNCTION
+            integer(int8), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int8) :: rxs_m_xs
+
+        end function pcg_output_rxs_m_xs_8_8
+
+
+
+        !> Output function: RXS M XS
+        module pure elemental function pcg_output_rxs_m_xs_16_16(state) result(rxs_m_xs)
+
+            !> A dummy argument for this FUNCTION
+            integer(int16), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int16) :: rxs_m_xs
+
+        end function pcg_output_rxs_m_xs_16_16
+
+
+
+        !> Output function: RXS M XS
+        module pure elemental function pcg_output_rxs_m_xs_32_32(state) result(rxs_m_xs)
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int32) :: rxs_m_xs
+
+        end function pcg_output_rxs_m_xs_32_32
+
+
+
+        !> Output function: RXS M XS
+        module pure elemental function pcg_output_rxs_m_xs_64_64(state) result(rxs_m_xs)
+
+            !> A dummy argument for this FUNCTION
+            integer(int64), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int64) :: rxs_m_xs
+
+        end function pcg_output_rxs_m_xs_64_64
+
+    end interface pcg_output_rxs_m_xs
 
 
 
@@ -149,6 +206,11 @@ module pcg_fortran
 
 
     interface
+
+        !> A SUBROUTINE for a test: `pcg_output_rxs_m_xs`
+        module subroutine test_pcg_output_rxs_m_xs
+        ! There is no dummy arugment for this SUBROUTINE
+        end subroutine test_pcg_output_rxs_m_xs
 
         !> A SUBROUTINE for a test: `pcg_output_xsh_rs`
         module subroutine test_pcg_output_xsh_rs
