@@ -1,6 +1,14 @@
 submodule (pcg_fortran) pcg_output_rxs_m_xs_implementation
 
     implicit none
+
+
+
+    !> This value is equal to `12605985483714917081ull`
+    integer(int64), parameter :: MULTIPLIER_64 = -5840758589994634535_int64
+
+
+
     contains
 
 
@@ -38,10 +46,22 @@ submodule (pcg_fortran) pcg_output_rxs_m_xs_implementation
 
 
 
+    module procedure pcg_output_rxs_m_xs_64_64
+
+        integer(int64) :: word
+
+        word     = ieor(shiftr( state, (shiftr(state, 59) + 5_int64) ), state) * MULTIPLIER_64
+        rxs_m_xs = ieor( shiftr(word, 43), word )
+
+    end procedure pcg_output_rxs_m_xs_64_64
+
+
+
     module procedure test_pcg_output_rxs_m_xs
         call test_pcg_output_rxs_m_xs_8_8
         call test_pcg_output_rxs_m_xs_16_16
         call test_pcg_output_rxs_m_xs_32_32
+        call test_pcg_output_rxs_m_xs_64_64
     end procedure test_pcg_output_rxs_m_xs
 
 
@@ -191,5 +211,45 @@ submodule (pcg_fortran) pcg_output_rxs_m_xs_implementation
         close(write_unit)
 
     end subroutine test_pcg_output_rxs_m_xs_32_32
+
+
+
+    subroutine test_pcg_output_rxs_m_xs_64_64
+
+        !> A local variable for this SUBROUTINE
+        !> The input value for the target of this test
+        integer(int64) :: state
+
+        !> A local variable for this SUBROUTINE
+        !> The device number to output the result of this test
+        integer :: write_unit
+
+        ! open the file to save the result of this test
+        open( &!
+            newunit = write_unit , &!
+            file    = './64.dat' , &!
+            action  = 'write'    , &!
+            status  = 'replace'    &!
+        )
+
+        ! write the results of this test
+        state = 1_int64
+
+        do
+
+            write(write_unit, '(I0,1X,I0)') &!
+            &   state, &!
+            &   pcg_output_rxs_m_xs(state)
+
+            if (state .lt. 0_int64) exit
+
+            state = state + state
+
+        end do
+
+        ! close the used file
+        close(write_unit)
+
+    end subroutine test_pcg_output_rxs_m_xs_64_64
 
 end submodule pcg_output_rxs_m_xs_implementation

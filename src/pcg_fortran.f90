@@ -50,6 +50,19 @@ module pcg_fortran
 
         end function pcg_output_rxs_m_xs_32_32
 
+
+
+        !> Output function: RXS M XS
+        module pure elemental function pcg_output_rxs_m_xs_64_64(state) result(rxs_m_xs)
+
+            !> A dummy argument for this FUNCTION
+            integer(int64), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int64) :: rxs_m_xs
+
+        end function pcg_output_rxs_m_xs_64_64
+
     end interface pcg_output_rxs_m_xs
 
 
