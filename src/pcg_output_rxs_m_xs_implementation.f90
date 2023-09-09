@@ -27,9 +27,21 @@ submodule (pcg_fortran) pcg_output_rxs_m_xs_implementation
 
 
 
+    module procedure pcg_output_rxs_m_xs_32_32
+
+        integer(int32) :: word
+
+        word     = ieor(shiftr( state, (shiftr(state, 28) + 4_int32) ), state) * 277803737_int32
+        rxs_m_xs = ieor( shiftr(word, 22), word )
+
+    end procedure pcg_output_rxs_m_xs_32_32
+
+
+
     module procedure test_pcg_output_rxs_m_xs
         call test_pcg_output_rxs_m_xs_8_8
         call test_pcg_output_rxs_m_xs_16_16
+        call test_pcg_output_rxs_m_xs_32_32
     end procedure test_pcg_output_rxs_m_xs
 
 
@@ -139,5 +151,45 @@ submodule (pcg_fortran) pcg_output_rxs_m_xs_implementation
         end subroutine write_result
 
     end subroutine test_pcg_output_rxs_m_xs_16_16
+
+
+
+    subroutine test_pcg_output_rxs_m_xs_32_32
+
+        !> A local variable for this SUBROUTINE
+        !> The input value for the target of this test
+        integer(int32) :: state
+
+        !> A local variable for this SUBROUTINE
+        !> The device number to output the result of this test
+        integer :: write_unit
+
+        ! open the file to save the result of this test
+        open( &!
+            newunit = write_unit , &!
+            file    = './32.dat' , &!
+            action  = 'write'    , &!
+            status  = 'replace'    &!
+        )
+
+        ! write the results of this test
+        state = 1_int32
+
+        do
+
+            write(write_unit, '(I0,1X,I0)') &!
+            &   state, &!
+            &   pcg_output_rxs_m_xs(state)
+
+            if (state .lt. 0_int32) exit
+
+            state = state + state
+
+        end do
+
+        ! close the used file
+        close(write_unit)
+
+    end subroutine test_pcg_output_rxs_m_xs_32_32
 
 end submodule pcg_output_rxs_m_xs_implementation
