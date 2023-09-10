@@ -19,7 +19,7 @@ int test_pcg_output_xsl_rr_rr_64_64(void)
     // calculate & save the reference data
     for (uint64_t state = 1; state > 0; state <<= 1)
     {
-        fprintf(fp, "%ld %d\n", (int64_t)state, (int32_t)pcg_output_xsl_rr_rr_64_64(state));
+        fprintf(fp, "%ld %ld\n", (int64_t)state, (int64_t)pcg_output_xsl_rr_rr_64_64(state));
     }
 
     // close the used file
