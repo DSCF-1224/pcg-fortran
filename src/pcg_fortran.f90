@@ -60,7 +60,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_mcg_8_type
+    type, extends(pcg_state_8_type) :: pcg_state_mcg_8_type
     !! Representations mcg variants
 
         contains
@@ -71,7 +71,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_oneseq_8_type
+    type, extends(pcg_state_8_type) :: pcg_state_oneseq_8_type
     !! Representations oneseq variants
 
         contains
@@ -95,7 +95,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_unique_8_type
+    type, extends(pcg_state_8_type) :: pcg_state_unique_8_type
     !! Representations unique variants
 
         contains
@@ -106,7 +106,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_mcg_16_type
+    type, extends(pcg_state_16_type) :: pcg_state_mcg_16_type
     !! Representations mcg variants
 
         contains
@@ -117,7 +117,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_oneseq_16_type
+    type, extends(pcg_state_16_type) :: pcg_state_oneseq_16_type
     !! Representations oneseq variants
 
         contains
@@ -141,7 +141,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_unique_16_type
+    type, extends(pcg_state_16_type) :: pcg_state_unique_16_type
     !! Representations unique variants
 
         contains
@@ -152,7 +152,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_mcg_32_type
+    type, extends(pcg_state_32_type) :: pcg_state_mcg_32_type
     !! Representations mcg variants
 
         contains
@@ -163,7 +163,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_oneseq_32_type
+    type, extends(pcg_state_32_type) :: pcg_state_oneseq_32_type
     !! Representations oneseq variants
 
         contains
@@ -187,7 +187,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_unique_32_type
+    type, extends(pcg_state_32_type) :: pcg_state_unique_32_type
     !! Representations unique variants
 
         contains
@@ -198,7 +198,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_mcg_64_type
+    type, extends(pcg_state_64_type) :: pcg_state_mcg_64_type
     !! Representations mcg variants
 
         contains
@@ -209,7 +209,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_oneseq_64_type
+    type, extends(pcg_state_64_type) :: pcg_state_oneseq_64_type
     !! Representations oneseq variants
 
         contains
@@ -233,7 +233,7 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_unique_64_type
+    type, extends(pcg_state_64_type) :: pcg_state_unique_64_type
     !! Representations unique variants
 
         contains
