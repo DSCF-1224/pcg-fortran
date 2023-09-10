@@ -9,6 +9,7 @@ module pcg_fortran
     public  :: test_pcg_output_xsh_rr
     public  :: test_pcg_output_xsh_rs
     public  :: test_pcg_output_xsl_rr
+    public  :: test_pcg_output_xsl_rr_rr
 
 
 
@@ -171,6 +172,23 @@ module pcg_fortran
 
 
 
+    interface pcg_output_xsl_rr_rr
+
+        !> Output function: XSH RS
+        module pure elemental function pcg_output_xsl_rr_rr_64_64(state) result(xsl_rr_rr)
+
+            !> A dummy argument for this FUNCTION
+            integer(int64), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int64) :: xsl_rr_rr
+
+        end function pcg_output_xsl_rr_rr_64_64
+
+    end interface pcg_output_xsl_rr_rr
+
+
+
     interface pcg_rotr
 
         !> Rotate helper function
@@ -244,6 +262,11 @@ module pcg_fortran
         module subroutine test_pcg_output_xsl_rr
         ! There is no dummy arugment for this SUBROUTINE
         end subroutine test_pcg_output_xsl_rr
+
+        !> A SUBROUTINE for a test: `pcg_output_xsl_rr_rr`
+        module subroutine test_pcg_output_xsl_rr_rr
+        ! There is no dummy arugment for this SUBROUTINE
+        end subroutine test_pcg_output_xsl_rr_rr
 
     end interface
 
