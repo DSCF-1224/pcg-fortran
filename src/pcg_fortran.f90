@@ -14,6 +14,78 @@ module pcg_fortran
 
 
 
+    type :: pcg_state_8_type
+    !! Representations for the oneseq, mcg, and unique variants
+
+        integer(int8), private :: state
+
+    end type pcg_state_8_type
+
+
+
+    type :: pcg_state_16_type
+    !! Representations for the oneseq, mcg, and unique variants
+
+        integer(int16), private :: state
+
+    end type pcg_state_16_type
+
+
+
+    type :: pcg_state_32_type
+    !! Representations for the oneseq, mcg, and unique variants
+
+        integer(int32), private :: state
+
+    end type pcg_state_32_type
+
+
+
+    type :: pcg_state_64_type
+    !! Representations for the oneseq, mcg, and unique variants
+
+        integer(int64), private :: state
+
+    end type pcg_state_64_type
+
+
+
+    type :: pcg_state_setseq_8
+    !! Representations setseq variants
+
+        integer(int8), private :: state, inc
+
+    end type pcg_state_setseq_8
+
+
+
+    type :: pcg_state_setseq_16
+    !! Representations setseq variants
+
+        integer(int16), private :: state, inc
+
+    end type pcg_state_setseq_16
+
+
+
+    type :: pcg_state_setseq_32
+    !! Representations setseq variants
+
+        integer(int32), private :: state, inc
+
+    end type pcg_state_setseq_32
+
+
+
+    type :: pcg_state_setseq_64
+    !! Representations setseq variants
+
+        integer(int64), private :: state, inc
+
+    end type pcg_state_setseq_64
+
+
+
     interface pcg_output_rxs_m
 
         !> Output function: RXS M
