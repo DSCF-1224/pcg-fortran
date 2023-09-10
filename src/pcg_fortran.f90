@@ -14,7 +14,15 @@ module pcg_fortran
 
 
 
-    type :: pcg_state_8_type
+    type, abstract :: pcg_state_type
+
+        contains
+
+    end type pcg_state_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_8_type
     !! Representations for the oneseq, mcg, and unique variants
 
         integer(int8), private :: state
@@ -23,7 +31,7 @@ module pcg_fortran
 
 
 
-    type :: pcg_state_16_type
+    type, extends(pcg_state_type) :: pcg_state_16_type
     !! Representations for the oneseq, mcg, and unique variants
 
         integer(int16), private :: state
@@ -32,7 +40,7 @@ module pcg_fortran
 
 
 
-    type :: pcg_state_32_type
+    type, extends(pcg_state_type) :: pcg_state_32_type
     !! Representations for the oneseq, mcg, and unique variants
 
         integer(int32), private :: state
@@ -41,7 +49,7 @@ module pcg_fortran
 
 
 
-    type :: pcg_state_64_type
+    type, extends(pcg_state_type) :: pcg_state_64_type
     !! Representations for the oneseq, mcg, and unique variants
 
         integer(int64), private :: state
@@ -50,7 +58,7 @@ module pcg_fortran
 
 
 
-    type :: pcg_state_setseq_8
+    type, extends(pcg_state_type) :: pcg_state_setseq_8
     !! Representations setseq variants
 
         integer(int8), private :: state, inc
@@ -59,7 +67,7 @@ module pcg_fortran
 
 
 
-    type :: pcg_state_setseq_16
+    type, extends(pcg_state_type) :: pcg_state_setseq_16
     !! Representations setseq variants
 
         integer(int16), private :: state, inc
@@ -68,7 +76,7 @@ module pcg_fortran
 
 
 
-    type :: pcg_state_setseq_32
+    type, extends(pcg_state_type) :: pcg_state_setseq_32
     !! Representations setseq variants
 
         integer(int32), private :: state, inc
@@ -77,7 +85,7 @@ module pcg_fortran
 
 
 
-    type :: pcg_state_setseq_64
+    type, extends(pcg_state_type) :: pcg_state_setseq_64
     !! Representations setseq variants
 
         integer(int64), private :: state, inc
