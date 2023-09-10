@@ -58,12 +58,42 @@ module pcg_fortran
 
 
 
+    type, extends(pcg_state_type) :: pcg_state_mcg_8_type
+    !! Representations mcg variants
+    end type pcg_state_mcg_8_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_oneseq_8_type
+    !! Representations oneseq variants
+    end type pcg_state_oneseq_8_type
+
+
+
     type, extends(pcg_state_type) :: pcg_state_setseq_8_type
     !! Representations setseq variants
 
         integer(int8), private :: state, inc
 
     end type pcg_state_setseq_8_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_unique_8_type
+    !! Representations unique variants
+    end type pcg_state_unique_8_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_mcg_16_type
+    !! Representations mcg variants
+    end type pcg_state_mcg_16_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_oneseq_16_type
+    !! Representations oneseq variants
+    end type pcg_state_oneseq_16_type
 
 
 
@@ -76,6 +106,24 @@ module pcg_fortran
 
 
 
+    type, extends(pcg_state_type) :: pcg_state_unique_16_type
+    !! Representations unique variants
+    end type pcg_state_unique_16_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_mcg_32_type
+    !! Representations mcg variants
+    end type pcg_state_mcg_32_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_oneseq_32_type
+    !! Representations oneseq variants
+    end type pcg_state_oneseq_32_type
+
+
+
     type, extends(pcg_state_type) :: pcg_state_setseq_32_type
     !! Representations setseq variants
 
@@ -85,12 +133,36 @@ module pcg_fortran
 
 
 
+    type, extends(pcg_state_type) :: pcg_state_unique_32_type
+    !! Representations unique variants
+    end type pcg_state_unique_32_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_mcg_64_type
+    !! Representations mcg variants
+    end type pcg_state_mcg_64_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_oneseq_64_type
+    !! Representations oneseq variants
+    end type pcg_state_oneseq_64_type
+
+
+
     type, extends(pcg_state_type) :: pcg_state_setseq_64_type
     !! Representations setseq variants
 
         integer(int64), private :: state, inc
 
     end type pcg_state_setseq_64_type
+
+
+
+    type, extends(pcg_state_type) :: pcg_state_unique_64_type
+    !! Representations unique variants
+    end type pcg_state_unique_64_type
 
 
 
