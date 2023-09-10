@@ -27,6 +27,19 @@ module pcg_fortran
 
         end function pcg_output_rxs_m_16_8
 
+
+
+        !> Output function: RXS M
+        module pure elemental function pcg_output_rxs_m_32_16(state) result(rxs_m)
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int16) :: rxs_m
+
+        end function pcg_output_rxs_m_32_16
+
     end interface pcg_output_rxs_m
 
 
