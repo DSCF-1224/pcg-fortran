@@ -5,11 +5,29 @@ module pcg_fortran
     implicit none
 
     private
+    public  :: test_pcg_output_rxs_m
     public  :: test_pcg_output_rxs_m_xs
     public  :: test_pcg_output_xsh_rr
     public  :: test_pcg_output_xsh_rs
     public  :: test_pcg_output_xsl_rr
     public  :: test_pcg_output_xsl_rr_rr
+
+
+
+    interface pcg_output_rxs_m
+
+        !> Output function: RXS M
+        module pure elemental function pcg_output_rxs_m_16_8(state) result(rxs_m)
+
+            !> A dummy argument for this FUNCTION
+            integer(int16), intent(in) :: state
+
+            !> The return value of this FUNCTION
+            integer(int8) :: rxs_m
+
+        end function pcg_output_rxs_m_16_8
+
+    end interface pcg_output_rxs_m
 
 
 
@@ -242,6 +260,11 @@ module pcg_fortran
 
 
     interface
+
+        !> A SUBROUTINE for a test: `pcg_output_rxs_m`
+        module subroutine test_pcg_output_rxs_m
+        ! There is no dummy arugment for this SUBROUTINE
+        end subroutine test_pcg_output_rxs_m
 
         !> A SUBROUTINE for a test: `pcg_output_rxs_m_xs`
         module subroutine test_pcg_output_rxs_m_xs
