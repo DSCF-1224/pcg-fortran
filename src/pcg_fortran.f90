@@ -58,39 +58,39 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_setseq_8
+    type, extends(pcg_state_type) :: pcg_state_setseq_8_type
     !! Representations setseq variants
 
         integer(int8), private :: state, inc
 
-    end type pcg_state_setseq_8
+    end type pcg_state_setseq_8_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_setseq_16
+    type, extends(pcg_state_type) :: pcg_state_setseq_16_type
     !! Representations setseq variants
 
         integer(int16), private :: state, inc
 
-    end type pcg_state_setseq_16
+    end type pcg_state_setseq_16_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_setseq_32
+    type, extends(pcg_state_type) :: pcg_state_setseq_32_type
     !! Representations setseq variants
 
         integer(int32), private :: state, inc
 
-    end type pcg_state_setseq_32
+    end type pcg_state_setseq_32_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_setseq_64
+    type, extends(pcg_state_type) :: pcg_state_setseq_64_type
     !! Representations setseq variants
 
         integer(int64), private :: state, inc
 
-    end type pcg_state_setseq_64
+    end type pcg_state_setseq_64_type
 
 
 
