@@ -18,6 +18,8 @@ module pcg_fortran
 
         contains
 
+        procedure(pcg_initialize_abstract), pass(rng), deferred, public :: initialize
+
     end type pcg_state_type
 
 
@@ -58,14 +60,24 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_mcg_8_type
+    type, extends(pcg_state_8_type) :: pcg_state_mcg_8_type
     !! Representations mcg variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_mcg_8
+
     end type pcg_state_mcg_8_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_oneseq_8_type
+    type, extends(pcg_state_8_type) :: pcg_state_oneseq_8_type
     !! Representations oneseq variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_oneseq_8
+
     end type pcg_state_oneseq_8_type
 
 
@@ -75,24 +87,43 @@ module pcg_fortran
 
         integer(int8), private :: state, inc
 
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_setseq_8
+
     end type pcg_state_setseq_8_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_unique_8_type
+    type, extends(pcg_state_8_type) :: pcg_state_unique_8_type
     !! Representations unique variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_unique_8
+
     end type pcg_state_unique_8_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_mcg_16_type
+    type, extends(pcg_state_16_type) :: pcg_state_mcg_16_type
     !! Representations mcg variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_mcg_16
+
     end type pcg_state_mcg_16_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_oneseq_16_type
+    type, extends(pcg_state_16_type) :: pcg_state_oneseq_16_type
     !! Representations oneseq variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_oneseq_16
+
     end type pcg_state_oneseq_16_type
 
 
@@ -102,24 +133,43 @@ module pcg_fortran
 
         integer(int16), private :: state, inc
 
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_setseq_16
+
     end type pcg_state_setseq_16_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_unique_16_type
+    type, extends(pcg_state_16_type) :: pcg_state_unique_16_type
     !! Representations unique variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_unique_16
+
     end type pcg_state_unique_16_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_mcg_32_type
+    type, extends(pcg_state_32_type) :: pcg_state_mcg_32_type
     !! Representations mcg variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_mcg_32
+
     end type pcg_state_mcg_32_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_oneseq_32_type
+    type, extends(pcg_state_32_type) :: pcg_state_oneseq_32_type
     !! Representations oneseq variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_oneseq_32
+
     end type pcg_state_oneseq_32_type
 
 
@@ -129,24 +179,43 @@ module pcg_fortran
 
         integer(int32), private :: state, inc
 
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_setseq_32
+
     end type pcg_state_setseq_32_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_unique_32_type
+    type, extends(pcg_state_32_type) :: pcg_state_unique_32_type
     !! Representations unique variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_unique_32
+
     end type pcg_state_unique_32_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_mcg_64_type
+    type, extends(pcg_state_64_type) :: pcg_state_mcg_64_type
     !! Representations mcg variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_mcg_64
+
     end type pcg_state_mcg_64_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_oneseq_64_type
+    type, extends(pcg_state_64_type) :: pcg_state_oneseq_64_type
     !! Representations oneseq variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_oneseq_64
+
     end type pcg_state_oneseq_64_type
 
 
@@ -156,13 +225,181 @@ module pcg_fortran
 
         integer(int64), private :: state, inc
 
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_setseq_64
+
     end type pcg_state_setseq_64_type
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_unique_64_type
+    type, extends(pcg_state_64_type) :: pcg_state_unique_64_type
     !! Representations unique variants
+
+        contains
+
+        procedure, pass(rng), public :: initialize => pcg_initialize_unique_64
+
     end type pcg_state_unique_64_type
+
+
+
+    !> Static initialization constants
+    !> (if you can't call srandom for some bizarre reason).
+    interface
+
+        module subroutine pcg_initialize_abstract(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_abstract
+
+
+
+        module subroutine pcg_initialize_mcg_8(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_8_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_mcg_8
+
+
+
+        module subroutine pcg_initialize_oneseq_8(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_8_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_oneseq_8
+
+
+
+        module subroutine pcg_initialize_setseq_8(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_8_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_setseq_8
+
+
+
+        module subroutine pcg_initialize_unique_8(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_8_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_unique_8
+
+
+
+        module subroutine pcg_initialize_mcg_16(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_16_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_mcg_16
+
+
+
+        module subroutine pcg_initialize_oneseq_16(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_16_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_oneseq_16
+
+
+
+        module subroutine pcg_initialize_setseq_16(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_16_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_setseq_16
+
+
+
+        module subroutine pcg_initialize_unique_16(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_16_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_unique_16
+
+
+
+        module subroutine pcg_initialize_mcg_32(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_32_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_mcg_32
+
+
+
+        module subroutine pcg_initialize_oneseq_32(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_32_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_oneseq_32
+
+
+
+        module subroutine pcg_initialize_setseq_32(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_32_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_setseq_32
+
+
+
+        module subroutine pcg_initialize_unique_32(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_32_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_unique_32
+
+
+
+        module subroutine pcg_initialize_mcg_64(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_64_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_mcg_64
+
+
+
+        module subroutine pcg_initialize_oneseq_64(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_64_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_oneseq_64
+
+
+
+        module subroutine pcg_initialize_setseq_64(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_64_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_setseq_64
+
+
+
+        module subroutine pcg_initialize_unique_64(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_64_type), intent(out) :: rng
+
+        end subroutine pcg_initialize_unique_64
+
+    end interface
 
 
 
