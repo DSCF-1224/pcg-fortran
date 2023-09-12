@@ -14,6 +14,34 @@ module pcg_fortran
 
 
 
+    !> Equal to `77U`
+    integer(int8), parameter, private :: PCG_DEFAULT_INCREMENT_8 = int(Z'4D', int8)
+
+    !> Equal to `47989U`
+    integer(int16), parameter, private :: PCG_DEFAULT_INCREMENT_16 = int(Z'BB75', int16)
+    
+    !> Equal to `2891336453U`
+    integer(int32), parameter, private :: PCG_DEFAULT_INCREMENT_32 = int(Z'AC564B05', int32)
+    
+    !> Equal to `1442695040888963407ULL`
+    integer(int64), parameter, private :: PCG_DEFAULT_INCREMENT_64 = int(Z'14057B7EF767814F', int64)
+
+
+
+    !> Equal to `141U`
+    integer(int8), parameter, private :: PCG_DEFAULT_MULTIPLIER_8 = int(Z'8D', int8)
+    
+    !> Equal to `12829U`
+    integer(int16), parameter, private :: PCG_DEFAULT_MULTIPLIER_16 = int(Z'321D', int16)
+    
+    !> Equal to `747796405U`
+    integer(int32), parameter, private :: PCG_DEFAULT_MULTIPLIER_32 = int(Z'2C9277B5', int32)
+    
+    !> Equal to `6364136223846793005ULL`
+    integer(int64), parameter, private :: PCG_DEFAULT_MULTIPLIER_64 = int(Z'5851F42D4C957F2D', int64)
+
+
+
     type, abstract :: pcg_state_type
 
         contains
