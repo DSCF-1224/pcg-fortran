@@ -82,10 +82,10 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_setseq_8_type
+    type, extends(pcg_state_8_type) :: pcg_state_setseq_8_type
     !! Representations setseq variants
 
-        integer(int8), private :: state, inc
+        integer(int8), private :: inc
 
         contains
 
@@ -128,10 +128,10 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_setseq_16_type
+    type, extends(pcg_state_16_type) :: pcg_state_setseq_16_type
     !! Representations setseq variants
 
-        integer(int16), private :: state, inc
+        integer(int16), private :: inc
 
         contains
 
@@ -174,10 +174,10 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_setseq_32_type
+    type, extends(pcg_state_32_type) :: pcg_state_setseq_32_type
     !! Representations setseq variants
 
-        integer(int32), private :: state, inc
+        integer(int32), private :: inc
 
         contains
 
@@ -220,10 +220,10 @@ module pcg_fortran
 
 
 
-    type, extends(pcg_state_type) :: pcg_state_setseq_64_type
+    type, extends(pcg_state_64_type) :: pcg_state_setseq_64_type
     !! Representations setseq variants
 
-        integer(int64), private :: state, inc
+        integer(int64), private :: inc
 
         contains
 
