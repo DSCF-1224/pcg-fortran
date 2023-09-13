@@ -57,6 +57,12 @@ module pcg_fortran
 
         integer(int8), private :: state
 
+        contains
+
+        procedure, nopass, private :: pcg_add_default_increment_8
+
+        generic, public :: default_increment => pcg_add_default_increment_8
+
     end type pcg_state_8_type
 
 
@@ -65,6 +71,12 @@ module pcg_fortran
     !! Representations for the oneseq, mcg, and unique variants
 
         integer(int16), private :: state
+
+        contains
+
+        procedure, nopass, private :: pcg_add_default_increment_16
+
+        generic, public :: default_increment => pcg_add_default_increment_16
 
     end type pcg_state_16_type
 
@@ -75,6 +87,12 @@ module pcg_fortran
 
         integer(int32), private :: state
 
+        contains
+
+        procedure, nopass, private :: pcg_add_default_increment_32
+
+        generic, public :: default_increment => pcg_add_default_increment_32
+
     end type pcg_state_32_type
 
 
@@ -83,6 +101,12 @@ module pcg_fortran
     !! Representations for the oneseq, mcg, and unique variants
 
         integer(int64), private :: state
+
+        contains
+
+        procedure, nopass, private :: pcg_add_default_increment_64
+
+        generic, public :: default_increment => pcg_add_default_increment_64
 
     end type pcg_state_64_type
 
@@ -269,6 +293,58 @@ module pcg_fortran
         procedure, pass(rng), public :: initialize => pcg_initialize_unique_64
 
     end type pcg_state_unique_64_type
+
+
+
+    interface
+
+        module pure elemental function pcg_add_default_increment_8(i) result(incremented)
+
+            !> A dummy argument for this FUNCTION
+            integer(int8), intent(in) :: i
+
+            !> The return value of this FUNCTION
+            integer(int8) :: incremented
+
+        end function pcg_add_default_increment_8
+
+
+
+        module pure elemental function pcg_add_default_increment_16(i) result(incremented)
+
+            !> A dummy argument for this FUNCTION
+            integer(int16), intent(in) :: i
+
+            !> The return value of this FUNCTION
+            integer(int16) :: incremented
+
+        end function pcg_add_default_increment_16
+
+
+
+        module pure elemental function pcg_add_default_increment_32(i) result(incremented)
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: i
+
+            !> The return value of this FUNCTION
+            integer(int32) :: incremented
+
+        end function pcg_add_default_increment_32
+
+
+
+        module pure elemental function pcg_add_default_increment_64(i) result(incremented)
+
+            !> A dummy argument for this FUNCTION
+            integer(int64), intent(in) :: i
+
+            !> The return value of this FUNCTION
+            integer(int64) :: incremented
+
+        end function pcg_add_default_increment_64
+
+    end interface
 
 
 
