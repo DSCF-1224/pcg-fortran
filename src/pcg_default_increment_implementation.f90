@@ -1,4 +1,4 @@
-submodule (pcg_fortran) default_increment_implementation
+submodule (pcg_fortran) pcg_default_increment_implementation
 
     implicit none
     contains
@@ -10,4 +10,4 @@ submodule (pcg_fortran) default_increment_implementation
     module procedure pcg_add_default_increment_32 ; incremented = i + PCG_DEFAULT_INCREMENT_32 ; end procedure
     module procedure pcg_add_default_increment_64 ; incremented = i + PCG_DEFAULT_INCREMENT_64 ; end procedure
 
-end submodule default_increment_implementation
+end submodule pcg_default_increment_implementation
