@@ -60,8 +60,10 @@ module pcg_fortran
         contains
 
         procedure, nopass, private :: pcg_add_default_increment_8
+        procedure, nopass, private :: pcg_multiply_default_multiplier_8
 
-        generic, public :: default_increment => pcg_add_default_increment_8
+        generic, public :: default_increment  => pcg_add_default_increment_8
+        generic, public :: default_multiplier => pcg_multiply_default_multiplier_8
 
     end type pcg_state_8_type
 
@@ -75,8 +77,10 @@ module pcg_fortran
         contains
 
         procedure, nopass, private :: pcg_add_default_increment_16
+        procedure, nopass, private :: pcg_multiply_default_multiplier_16
 
-        generic, public :: default_increment => pcg_add_default_increment_16
+        generic, public :: default_increment  => pcg_add_default_increment_16
+        generic, public :: default_multiplier => pcg_multiply_default_multiplier_16
 
     end type pcg_state_16_type
 
@@ -90,8 +94,10 @@ module pcg_fortran
         contains
 
         procedure, nopass, private :: pcg_add_default_increment_32
+        procedure, nopass, private :: pcg_multiply_default_multiplier_32
 
-        generic, public :: default_increment => pcg_add_default_increment_32
+        generic, public :: default_increment  => pcg_add_default_increment_32
+        generic, public :: default_multiplier => pcg_multiply_default_multiplier_32
 
     end type pcg_state_32_type
 
@@ -105,8 +111,10 @@ module pcg_fortran
         contains
 
         procedure, nopass, private :: pcg_add_default_increment_64
+        procedure, nopass, private :: pcg_multiply_default_multiplier_64
 
-        generic, public :: default_increment => pcg_add_default_increment_64
+        generic, public :: default_increment  => pcg_add_default_increment_64
+        generic, public :: default_multiplier => pcg_multiply_default_multiplier_64
 
     end type pcg_state_64_type
 
@@ -343,6 +351,58 @@ module pcg_fortran
             integer(int64) :: incremented
 
         end function pcg_add_default_increment_64
+
+    end interface
+
+
+
+    interface
+
+        module pure elemental function pcg_multiply_default_multiplier_8(i) result(multiplied)
+
+            !> A dummy argument for this FUNCTION
+            integer(int8), intent(in) :: i
+
+            !> The return value of this FUNCTION
+            integer(int8) :: multiplied
+
+        end function pcg_multiply_default_multiplier_8
+
+
+
+        module pure elemental function pcg_multiply_default_multiplier_16(i) result(multiplied)
+
+            !> A dummy argument for this FUNCTION
+            integer(int16), intent(in) :: i
+
+            !> The return value of this FUNCTION
+            integer(int16) :: multiplied
+
+        end function pcg_multiply_default_multiplier_16
+
+
+
+        module pure elemental function pcg_multiply_default_multiplier_32(i) result(multiplied)
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: i
+
+            !> The return value of this FUNCTION
+            integer(int32) :: multiplied
+
+        end function pcg_multiply_default_multiplier_32
+
+
+
+        module pure elemental function pcg_multiply_default_multiplier_64(i) result(multiplied)
+
+            !> A dummy argument for this FUNCTION
+            integer(int64), intent(in) :: i
+
+            !> The return value of this FUNCTION
+            integer(int64) :: multiplied
+
+        end function pcg_multiply_default_multiplier_64
 
     end interface
 
