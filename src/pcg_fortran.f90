@@ -1,5 +1,7 @@
 module pcg_fortran
 
+    use, intrinsic :: iso_c_binding, only: c_loc
+
     use, intrinsic :: iso_fortran_env
 
     implicit none
@@ -11,6 +13,7 @@ module pcg_fortran
     public  :: test_pcg_output_xsh_rs
     public  :: test_pcg_output_xsl_rr
     public  :: test_pcg_output_xsl_rr_rr
+    public  :: test_pcg_seed
     public  :: test_pcg_step
 
 
@@ -64,8 +67,11 @@ module pcg_fortran
         procedure, nopass, private :: pcg_add_default_increment_8
         procedure, nopass, private :: pcg_multiply_default_multiplier_8
 
-        generic, public :: default_increment  => pcg_add_default_increment_8
-        generic, public :: default_multiplier => pcg_multiply_default_multiplier_8
+        procedure, pass(rng), private :: pcg_step_for_seeding_8
+
+        generic, public  :: default_increment  => pcg_add_default_increment_8
+        generic, public  :: default_multiplier => pcg_multiply_default_multiplier_8
+        generic, private :: step_for_seeding   => pcg_step_for_seeding_8
 
     end type pcg_state_8_type
 
@@ -81,8 +87,11 @@ module pcg_fortran
         procedure, nopass, private :: pcg_add_default_increment_16
         procedure, nopass, private :: pcg_multiply_default_multiplier_16
 
-        generic, public :: default_increment  => pcg_add_default_increment_16
-        generic, public :: default_multiplier => pcg_multiply_default_multiplier_16
+        procedure, pass(rng), private :: pcg_step_for_seeding_16
+
+        generic, public  :: default_increment  => pcg_add_default_increment_16
+        generic, public  :: default_multiplier => pcg_multiply_default_multiplier_16
+        generic, private :: step_for_seeding   => pcg_step_for_seeding_16
 
     end type pcg_state_16_type
 
@@ -98,8 +107,11 @@ module pcg_fortran
         procedure, nopass, private :: pcg_add_default_increment_32
         procedure, nopass, private :: pcg_multiply_default_multiplier_32
 
-        generic, public :: default_increment  => pcg_add_default_increment_32
-        generic, public :: default_multiplier => pcg_multiply_default_multiplier_32
+        procedure, pass(rng), private :: pcg_step_for_seeding_32
+
+        generic, public  :: default_increment  => pcg_add_default_increment_32
+        generic, public  :: default_multiplier => pcg_multiply_default_multiplier_32
+        generic, private :: step_for_seeding   => pcg_step_for_seeding_32
 
     end type pcg_state_32_type
 
@@ -115,31 +127,76 @@ module pcg_fortran
         procedure, nopass, private :: pcg_add_default_increment_64
         procedure, nopass, private :: pcg_multiply_default_multiplier_64
 
-        generic, public :: default_increment  => pcg_add_default_increment_64
-        generic, public :: default_multiplier => pcg_multiply_default_multiplier_64
+        procedure, pass(rng), private :: pcg_step_for_seeding_64
+
+        generic, public  :: default_increment  => pcg_add_default_increment_64
+        generic, public  :: default_multiplier => pcg_multiply_default_multiplier_64
+        generic, private :: step_for_seeding   => pcg_step_for_seeding_64
 
     end type pcg_state_64_type
 
 
 
-    type, extends(pcg_state_8_type) :: pcg_state_mcg_8_type
+    type, abstract, extends(pcg_state_8_type) :: pcg_state_basic_8_type
+
+        contains
+
+        procedure(pcg_seed_8_abstract), pass(rng), deferred, public :: seed
+
+    end type pcg_state_basic_8_type
+
+
+
+    type, abstract, extends(pcg_state_16_type) :: pcg_state_basic_16_type
+
+        contains
+
+        procedure(pcg_seed_16_abstract), pass(rng), deferred, public :: seed
+
+    end type pcg_state_basic_16_type
+
+
+
+    type, abstract, extends(pcg_state_32_type) :: pcg_state_basic_32_type
+
+        contains
+
+        procedure(pcg_seed_32_abstract), pass(rng), deferred, public :: seed
+
+    end type pcg_state_basic_32_type
+
+
+
+    type, abstract, extends(pcg_state_64_type) :: pcg_state_basic_64_type
+
+        contains
+
+        procedure(pcg_seed_64_abstract), pass(rng), deferred, public :: seed
+
+    end type pcg_state_basic_64_type
+
+
+
+    type, extends(pcg_state_basic_8_type) :: pcg_state_mcg_8_type
     !! Representations mcg variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_8
+        procedure, pass(rng), public  :: seed       => pcg_seed_8_mcg
         procedure, pass(rng), private :: step       => pcg_step_8_mcg
 
     end type pcg_state_mcg_8_type
 
 
 
-    type, extends(pcg_state_8_type) :: pcg_state_oneseq_8_type
+    type, extends(pcg_state_basic_8_type) :: pcg_state_oneseq_8_type
     !! Representations oneseq variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_8
+        procedure, pass(rng), public  :: seed       => pcg_seed_8_oneseq
         procedure, pass(rng), private :: step       => pcg_step_8_oneseq
 
     end type pcg_state_oneseq_8_type
@@ -153,43 +210,50 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: pcg_seed_8_setseq
+
         procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_8
         procedure, pass(rng), private :: step       => pcg_step_8_setseq
+
+        generic, public :: seed => pcg_seed_8_setseq
 
     end type pcg_state_setseq_8_type
 
 
 
-    type, extends(pcg_state_8_type) :: pcg_state_unique_8_type
+    type, extends(pcg_state_basic_8_type) :: pcg_state_unique_8_type
     !! Representations unique variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_8
+        procedure, pass(rng), public  :: seed       => pcg_seed_8_unique
         procedure, pass(rng), private :: step       => pcg_step_8_unique
 
     end type pcg_state_unique_8_type
 
 
 
-    type, extends(pcg_state_16_type) :: pcg_state_mcg_16_type
+    type, extends(pcg_state_basic_16_type) :: pcg_state_mcg_16_type
     !! Representations mcg variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_16
+        procedure, pass(rng), public  :: seed       => pcg_seed_16_mcg
         procedure, pass(rng), private :: step       => pcg_step_16_mcg
 
     end type pcg_state_mcg_16_type
 
 
 
-    type, extends(pcg_state_16_type) :: pcg_state_oneseq_16_type
+    type, extends(pcg_state_basic_16_type) :: pcg_state_oneseq_16_type
     !! Representations oneseq variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_16
+        procedure, pass(rng), public  :: seed       => pcg_seed_16_oneseq
         procedure, pass(rng), private :: step       => pcg_step_16_oneseq
 
     end type pcg_state_oneseq_16_type
@@ -203,43 +267,50 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: pcg_seed_16_setseq
+
         procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_16
         procedure, pass(rng), private :: step       => pcg_step_16_setseq
+
+        generic, public :: seed => pcg_seed_16_setseq
 
     end type pcg_state_setseq_16_type
 
 
 
-    type, extends(pcg_state_16_type) :: pcg_state_unique_16_type
+    type, extends(pcg_state_basic_16_type) :: pcg_state_unique_16_type
     !! Representations unique variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_16
+        procedure, pass(rng), public  :: seed       => pcg_seed_16_unique
         procedure, pass(rng), private :: step       => pcg_step_16_unique
 
     end type pcg_state_unique_16_type
 
 
 
-    type, extends(pcg_state_32_type) :: pcg_state_mcg_32_type
+    type, extends(pcg_state_basic_32_type) :: pcg_state_mcg_32_type
     !! Representations mcg variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_32
+        procedure, pass(rng), public  :: seed       => pcg_seed_32_mcg
         procedure, pass(rng), private :: step       => pcg_step_32_mcg
 
     end type pcg_state_mcg_32_type
 
 
 
-    type, extends(pcg_state_32_type) :: pcg_state_oneseq_32_type
+    type, extends(pcg_state_basic_32_type) :: pcg_state_oneseq_32_type
     !! Representations oneseq variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_32
+        procedure, pass(rng), public  :: seed       => pcg_seed_32_oneseq
         procedure, pass(rng), private :: step       => pcg_step_32_oneseq
 
     end type pcg_state_oneseq_32_type
@@ -253,43 +324,50 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: pcg_seed_32_setseq
+
         procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_32
         procedure, pass(rng), private :: step       => pcg_step_32_setseq
+
+        generic, public :: seed => pcg_seed_32_setseq
 
     end type pcg_state_setseq_32_type
 
 
 
-    type, extends(pcg_state_32_type) :: pcg_state_unique_32_type
+    type, extends(pcg_state_basic_32_type) :: pcg_state_unique_32_type
     !! Representations unique variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_32
+        procedure, pass(rng), public  :: seed       => pcg_seed_32_unique
         procedure, pass(rng), private :: step       => pcg_step_32_unique
 
     end type pcg_state_unique_32_type
 
 
 
-    type, extends(pcg_state_64_type) :: pcg_state_mcg_64_type
+    type, extends(pcg_state_basic_64_type) :: pcg_state_mcg_64_type
     !! Representations mcg variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_64
+        procedure, pass(rng), public  :: seed       => pcg_seed_64_mcg
         procedure, pass(rng), private :: step       => pcg_step_64_mcg
 
     end type pcg_state_mcg_64_type
 
 
 
-    type, extends(pcg_state_64_type) :: pcg_state_oneseq_64_type
+    type, extends(pcg_state_basic_64_type) :: pcg_state_oneseq_64_type
     !! Representations oneseq variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_64
+        procedure, pass(rng), public  :: seed       => pcg_seed_64_oneseq
         procedure, pass(rng), private :: step       => pcg_step_64_oneseq
 
     end type pcg_state_oneseq_64_type
@@ -303,19 +381,24 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: pcg_seed_64_setseq
+
         procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_64
         procedure, pass(rng), private :: step       => pcg_step_64_setseq
+
+        generic, public :: seed => pcg_seed_64_setseq
 
     end type pcg_state_setseq_64_type
 
 
 
-    type, extends(pcg_state_64_type) :: pcg_state_unique_64_type
+    type, extends(pcg_state_basic_64_type) :: pcg_state_unique_64_type
     !! Representations unique variants
 
         contains
 
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_64
+        procedure, pass(rng), public  :: seed       => pcg_seed_64_unique
         procedure, pass(rng), private :: step       => pcg_step_64_unique
 
     end type pcg_state_unique_64_type
@@ -585,6 +668,303 @@ module pcg_fortran
 
 
 
+
+    !> Functions to seed the RNG state,
+    !> one version for each size and each style.
+    !> Unlike the step functions,
+    !> regular users can and should call these functions.
+    interface
+
+        module subroutine pcg_seed_8_abstract(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_basic_8_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: init_state
+
+        end subroutine pcg_seed_8_abstract
+
+
+
+        module subroutine pcg_seed_8_mcg(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_8_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: init_state
+
+        end subroutine pcg_seed_8_mcg
+
+
+
+        module subroutine pcg_seed_8_oneseq(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_8_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: init_state
+
+        end subroutine pcg_seed_8_oneseq
+
+
+
+        module subroutine pcg_seed_8_unique(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_8_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: init_state
+
+        end subroutine pcg_seed_8_unique
+
+    end interface
+
+
+
+
+    !> Functions to seed the RNG state,
+    !> one version for each size and each style.
+    !> Unlike the step functions,
+    !> regular users can and should call these functions.
+    interface
+
+        module subroutine pcg_seed_16_abstract(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_basic_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(in) :: init_state
+
+        end subroutine pcg_seed_16_abstract
+
+
+
+        module subroutine pcg_seed_16_mcg(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(in) :: init_state
+
+        end subroutine pcg_seed_16_mcg
+
+
+
+        module subroutine pcg_seed_16_oneseq(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(in) :: init_state
+
+        end subroutine pcg_seed_16_oneseq
+
+
+
+        module subroutine pcg_seed_16_unique(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(in) :: init_state
+
+        end subroutine pcg_seed_16_unique
+
+    end interface
+
+
+
+
+    !> Functions to seed the RNG state,
+    !> one version for each size and each style.
+    !> Unlike the step functions,
+    !> regular users can and should call these functions.
+    interface
+
+        module subroutine pcg_seed_32_abstract(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_basic_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: init_state
+
+        end subroutine pcg_seed_32_abstract
+
+
+
+        module subroutine pcg_seed_32_mcg(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: init_state
+
+        end subroutine pcg_seed_32_mcg
+
+
+
+        module subroutine pcg_seed_32_oneseq(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: init_state
+
+        end subroutine pcg_seed_32_oneseq
+
+
+
+        module subroutine pcg_seed_32_unique(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: init_state
+
+        end subroutine pcg_seed_32_unique
+
+    end interface
+
+
+
+
+    !> Functions to seed the RNG state,
+    !> one version for each size and each style.
+    !> Unlike the step functions,
+    !> regular users can and should call these functions.
+    interface
+
+        module subroutine pcg_seed_64_abstract(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_basic_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(in) :: init_state
+
+        end subroutine pcg_seed_64_abstract
+
+
+
+        module subroutine pcg_seed_64_mcg(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(in) :: init_state
+
+        end subroutine pcg_seed_64_mcg
+
+
+
+        module subroutine pcg_seed_64_oneseq(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(in) :: init_state
+
+        end subroutine pcg_seed_64_oneseq
+
+
+
+        module subroutine pcg_seed_64_unique(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(in) :: init_state
+
+        end subroutine pcg_seed_64_unique
+
+    end interface
+
+
+
+
+    !> Functions to seed the RNG state,
+    !> one version for each size and each style.
+    !> Unlike the step functions,
+    !> regular users can and should call these functions.
+    interface
+
+        module subroutine pcg_seed_8_setseq(rng, init_state, init_seq)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_8_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: init_state
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in), optional :: init_seq
+
+        end subroutine pcg_seed_8_setseq
+
+
+
+        module subroutine pcg_seed_16_setseq(rng, init_state, init_seq)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(in) :: init_state
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(in), optional :: init_seq
+
+        end subroutine pcg_seed_16_setseq
+
+
+
+        module subroutine pcg_seed_32_setseq(rng, init_state, init_seq)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: init_state
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in), optional :: init_seq
+
+        end subroutine pcg_seed_32_setseq
+
+
+
+        module subroutine pcg_seed_64_setseq(rng, init_state, init_seq)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(in) :: init_state
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(in), optional :: init_seq
+
+        end subroutine pcg_seed_64_setseq
+
+    end interface
+
+
+
     !> Functions to advance the underlying LCG,
     !> one version for each size and each style.
     !> These functions are considered semi-private.
@@ -741,6 +1121,62 @@ module pcg_fortran
             class(pcg_state_unique_64_type), intent(inout), target :: rng
 
         end subroutine pcg_step_64_unique
+
+    end interface
+
+
+
+    !> Functions to advance the underlying LCG,
+    !> one version for each size and each style.
+    !> These functions are considered semi-private.
+    !> There is rarely a good reason to call them directly.
+    interface
+
+        module subroutine pcg_step_for_seeding_8(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_8_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: init_state
+
+        end subroutine pcg_step_for_seeding_8
+
+
+
+        module subroutine pcg_step_for_seeding_16(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(in) :: init_state
+
+        end subroutine pcg_step_for_seeding_16
+
+
+
+        module subroutine pcg_step_for_seeding_32(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: init_state
+
+        end subroutine pcg_step_for_seeding_32
+
+
+
+        module subroutine pcg_step_for_seeding_64(rng, init_state)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(in) :: init_state
+
+        end subroutine pcg_step_for_seeding_64
 
     end interface
 
@@ -1049,10 +1485,31 @@ module pcg_fortran
         ! There is no dummy arugment for this SUBROUTINE
         end subroutine test_pcg_output_xsl_rr_rr
 
+        !> A SUBROUTINE for a test: `pcg_seed_*_*`
+        module subroutine test_pcg_seed
+        ! There is no dummy arugment for this SUBROUTINE
+        end subroutine test_pcg_seed
+
         !> A SUBROUTINE for a test: `pcg_step_*_*`
         module subroutine test_pcg_step
         ! There is no dummy arugment for this SUBROUTINE
         end subroutine test_pcg_step
+
+    end interface
+
+
+
+    interface
+
+        module subroutine generate_output_file_name(rng, file_name)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_type), intent(in) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            character(len=*), intent(inout) :: file_name
+
+        end subroutine generate_output_file_name
 
     end interface
 
