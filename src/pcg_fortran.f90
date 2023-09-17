@@ -11,6 +11,7 @@ module pcg_fortran
     public  :: test_pcg_output_xsh_rs
     public  :: test_pcg_output_xsl_rr
     public  :: test_pcg_output_xsl_rr_rr
+    public  :: test_pcg_step
 
 
 
@@ -46,7 +47,8 @@ module pcg_fortran
 
         contains
 
-        procedure(pcg_initialize_abstract), pass(rng), deferred, public :: initialize
+        procedure( pcg_initialize_abstract ), pass(rng), deferred, public  :: initialize
+        procedure( pcg_step_abstract       ), pass(rng), deferred, private :: step
 
     end type pcg_state_type
 
@@ -125,7 +127,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_mcg_8
+        procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_8
+        procedure, pass(rng), private :: step       => pcg_step_8_mcg
 
     end type pcg_state_mcg_8_type
 
@@ -136,7 +139,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_oneseq_8
+        procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_8
+        procedure, pass(rng), private :: step       => pcg_step_8_oneseq
 
     end type pcg_state_oneseq_8_type
 
@@ -149,7 +153,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_setseq_8
+        procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_8
+        procedure, pass(rng), private :: step       => pcg_step_8_setseq
 
     end type pcg_state_setseq_8_type
 
@@ -160,7 +165,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_unique_8
+        procedure, pass(rng), public  :: initialize => pcg_initialize_unique_8
+        procedure, pass(rng), private :: step       => pcg_step_8_unique
 
     end type pcg_state_unique_8_type
 
@@ -171,7 +177,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_mcg_16
+        procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_16
+        procedure, pass(rng), private :: step       => pcg_step_16_mcg
 
     end type pcg_state_mcg_16_type
 
@@ -182,7 +189,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_oneseq_16
+        procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_16
+        procedure, pass(rng), private :: step       => pcg_step_16_oneseq
 
     end type pcg_state_oneseq_16_type
 
@@ -195,7 +203,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_setseq_16
+        procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_16
+        procedure, pass(rng), private :: step       => pcg_step_16_setseq
 
     end type pcg_state_setseq_16_type
 
@@ -206,7 +215,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_unique_16
+        procedure, pass(rng), public  :: initialize => pcg_initialize_unique_16
+        procedure, pass(rng), private :: step       => pcg_step_16_unique
 
     end type pcg_state_unique_16_type
 
@@ -217,7 +227,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_mcg_32
+        procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_32
+        procedure, pass(rng), private :: step       => pcg_step_32_mcg
 
     end type pcg_state_mcg_32_type
 
@@ -228,7 +239,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_oneseq_32
+        procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_32
+        procedure, pass(rng), private :: step       => pcg_step_32_oneseq
 
     end type pcg_state_oneseq_32_type
 
@@ -241,7 +253,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_setseq_32
+        procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_32
+        procedure, pass(rng), private :: step       => pcg_step_32_setseq
 
     end type pcg_state_setseq_32_type
 
@@ -252,7 +265,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_unique_32
+        procedure, pass(rng), public  :: initialize => pcg_initialize_unique_32
+        procedure, pass(rng), private :: step       => pcg_step_32_unique
 
     end type pcg_state_unique_32_type
 
@@ -263,7 +277,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_mcg_64
+        procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_64
+        procedure, pass(rng), private :: step       => pcg_step_64_mcg
 
     end type pcg_state_mcg_64_type
 
@@ -274,7 +289,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_oneseq_64
+        procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_64
+        procedure, pass(rng), private :: step       => pcg_step_64_oneseq
 
     end type pcg_state_oneseq_64_type
 
@@ -287,7 +303,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_setseq_64
+        procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_64
+        procedure, pass(rng), private :: step       => pcg_step_64_setseq
 
     end type pcg_state_setseq_64_type
 
@@ -298,7 +315,8 @@ module pcg_fortran
 
         contains
 
-        procedure, pass(rng), public :: initialize => pcg_initialize_unique_64
+        procedure, pass(rng), public  :: initialize => pcg_initialize_unique_64
+        procedure, pass(rng), private :: step       => pcg_step_64_unique
 
     end type pcg_state_unique_64_type
 
@@ -562,6 +580,167 @@ module pcg_fortran
             class(pcg_state_unique_64_type), intent(out) :: rng
 
         end subroutine pcg_initialize_unique_64
+
+    end interface
+
+
+
+    !> Functions to advance the underlying LCG,
+    !> one version for each size and each style.
+    !> These functions are considered semi-private.
+    !> There is rarely a good reason to call them directly.
+    interface
+
+        module subroutine pcg_step_abstract(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_abstract
+
+
+
+        module subroutine pcg_step_8_mcg(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_8_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_8_mcg
+
+
+
+        module subroutine pcg_step_8_oneseq(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_8_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_8_oneseq
+
+
+
+        module subroutine pcg_step_8_setseq(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_8_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_8_setseq
+
+
+
+        module subroutine pcg_step_8_unique(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_8_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_8_unique
+
+
+
+        module subroutine pcg_step_16_mcg(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_16_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_16_mcg
+
+
+
+        module subroutine pcg_step_16_oneseq(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_16_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_16_oneseq
+
+
+
+        module subroutine pcg_step_16_setseq(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_16_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_16_setseq
+
+
+
+        module subroutine pcg_step_16_unique(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_16_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_16_unique
+
+
+
+        module subroutine pcg_step_32_mcg(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_32_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_32_mcg
+
+
+
+        module subroutine pcg_step_32_oneseq(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_32_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_32_oneseq
+
+
+
+        module subroutine pcg_step_32_setseq(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_32_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_32_setseq
+
+
+
+        module subroutine pcg_step_32_unique(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_32_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_32_unique
+
+
+
+        module subroutine pcg_step_64_mcg(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_64_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_64_mcg
+
+
+
+        module subroutine pcg_step_64_oneseq(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_64_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_64_oneseq
+
+
+
+        module subroutine pcg_step_64_setseq(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_64_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_64_setseq
+
+
+
+        module subroutine pcg_step_64_unique(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_64_type), intent(inout), target :: rng
+
+        end subroutine pcg_step_64_unique
 
     end interface
 
@@ -869,6 +1048,11 @@ module pcg_fortran
         module subroutine test_pcg_output_xsl_rr_rr
         ! There is no dummy arugment for this SUBROUTINE
         end subroutine test_pcg_output_xsl_rr_rr
+
+        !> A SUBROUTINE for a test: `pcg_step_*_*`
+        module subroutine test_pcg_step
+        ! There is no dummy arugment for this SUBROUTINE
+        end subroutine test_pcg_step
 
     end interface
 
