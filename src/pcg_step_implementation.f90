@@ -23,37 +23,13 @@ submodule (pcg_fortran) pcg_step_implementation
 
         !> A local variable for this SUBROUTINE
         !> The file name to output the result of this test
-        character(len=15), allocatable :: file_name
+        character(len=15) :: file_name
 
 
 
         ! setup the file to save the result of this test
 
-        select type(rng)
-
-            type is( pcg_state_mcg_8_type     ); file_name = 'mcg_8'
-            type is( pcg_state_mcg_16_type    ); file_name = 'mcg_16'
-            type is( pcg_state_mcg_32_type    ); file_name = 'mcg_32'
-            type is( pcg_state_mcg_64_type    ); file_name = 'mcg_64'
-
-            type is( pcg_state_oneseq_8_type  ); file_name = 'oneseq_8'
-            type is( pcg_state_oneseq_16_type ); file_name = 'oneseq_16'
-            type is( pcg_state_oneseq_32_type ); file_name = 'oneseq_32'
-            type is( pcg_state_oneseq_64_type ); file_name = 'oneseq_64'
-
-            type is( pcg_state_setseq_8_type  ); file_name = 'setseq_8'
-            type is( pcg_state_setseq_16_type ); file_name = 'setseq_16'
-            type is( pcg_state_setseq_32_type ); file_name = 'setseq_32'
-            type is( pcg_state_setseq_64_type ); file_name = 'setseq_64'
-
-            type is( pcg_state_unique_8_type  ); file_name = 'unique_8'
-            type is( pcg_state_unique_16_type ); file_name = 'unique_16'
-            type is( pcg_state_unique_32_type ); file_name = 'unique_32'
-            type is( pcg_state_unique_64_type ); file_name = 'unique_64'
-
-        end select
-
-        file_name = './' // trim(file_name) // '.dat'
+        call generate_output_file_name(rng, file_name)
 
 
 
