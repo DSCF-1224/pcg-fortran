@@ -66,4 +66,25 @@ submodule (pcg_fortran) pcg_advance_setseq_implementation
 
     end procedure pcg_advance_32_setseq
 
+
+
+    module procedure pcg_advance_64_setseq
+
+        !> A local variable for this SUBROUTINE
+        integer(int64) :: old_state
+
+
+
+        old_state = rng%state
+
+        rng%state = &!
+            pcg_advance_lcg( &!
+                state         = old_state                 , &!
+                init_delta    = delta                     , &!
+                init_cur_mult = PCG_DEFAULT_MULTIPLIER_64 , &!
+                init_cur_plus = rng%inc                     &!
+            )
+
+    end procedure pcg_advance_64_setseq
+
 end submodule pcg_advance_setseq_implementation
