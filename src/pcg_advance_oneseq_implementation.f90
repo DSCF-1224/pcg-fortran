@@ -19,9 +19,30 @@ submodule (pcg_fortran) pcg_advance_oneseq_implementation
                 state         = old_state                , &!
                 init_delta    = delta                    , &!
                 init_cur_mult = PCG_DEFAULT_MULTIPLIER_8 , &!
-                init_cur_plus = PCG_DEFAULT_INCREMENT_8    &!                     &!
+                init_cur_plus = PCG_DEFAULT_INCREMENT_8    &!
             )
 
     end procedure pcg_advance_8_oneseq
+
+
+
+    module procedure pcg_advance_16_oneseq
+
+        !> A local variable for this SUBROUTINE
+        integer(int16) :: old_state
+
+
+
+        old_state = rng%state
+
+        rng%state = &!
+            pcg_advance_lcg( &!
+                state         = old_state                 , &!
+                init_delta    = delta                     , &!
+                init_cur_mult = PCG_DEFAULT_MULTIPLIER_16 , &!
+                init_cur_plus = PCG_DEFAULT_INCREMENT_16    &!
+            )
+
+    end procedure pcg_advance_16_oneseq
 
 end submodule pcg_advance_oneseq_implementation
