@@ -7,6 +7,7 @@ module pcg_fortran
     implicit none
 
     private
+    public  :: test_pcg_advance
     public  :: test_pcg_output_rxs_m
     public  :: test_pcg_output_rxs_m_xs
     public  :: test_pcg_output_xsh_rr
@@ -68,6 +69,8 @@ module pcg_fortran
         procedure, nopass, private :: pcg_multiply_default_multiplier_8
 
         procedure, pass(rng), private :: pcg_step_for_seeding_8
+
+        procedure(pcg_advance_8_abstract), pass(rng), private, deferred :: advance
 
         generic, public  :: default_increment  => pcg_add_default_increment_8
         generic, public  :: default_multiplier => pcg_multiply_default_multiplier_8
@@ -182,6 +185,7 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: advance    => pcg_advance_8_mcg
         procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_8
         procedure, pass(rng), public  :: seed       => pcg_seed_8_mcg
         procedure, pass(rng), private :: step       => pcg_step_8_mcg
@@ -195,6 +199,7 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: advance    => pcg_advance_8_oneseq
         procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_8
         procedure, pass(rng), public  :: seed       => pcg_seed_8_oneseq
         procedure, pass(rng), private :: step       => pcg_step_8_oneseq
@@ -212,6 +217,7 @@ module pcg_fortran
 
         procedure, pass(rng), private :: pcg_seed_8_setseq
 
+        procedure, pass(rng), private :: advance    => pcg_advance_8_setseq
         procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_8
         procedure, pass(rng), private :: step       => pcg_step_8_setseq
 
@@ -226,6 +232,7 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: advance    => pcg_advance_8_unique
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_8
         procedure, pass(rng), public  :: seed       => pcg_seed_8_unique
         procedure, pass(rng), private :: step       => pcg_step_8_unique
@@ -452,6 +459,74 @@ module pcg_fortran
             integer(int64) :: incremented
 
         end function pcg_add_default_increment_64
+
+    end interface
+
+
+
+    !> Functions to advance the underlying LCG,
+    !> one version for each size and each style.
+    !> These functions are considered semi-private.
+    !> There is rarely a good reason to call them directly.
+    interface
+
+        module elemental subroutine pcg_advance_8_abstract(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_8_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: delta
+
+        end subroutine pcg_advance_8_abstract
+
+
+
+        module elemental subroutine pcg_advance_8_mcg(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_8_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: delta
+
+        end subroutine pcg_advance_8_mcg
+
+
+
+        module elemental subroutine pcg_advance_8_oneseq(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_8_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: delta
+
+        end subroutine pcg_advance_8_oneseq
+
+
+
+        module elemental subroutine pcg_advance_8_setseq(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_8_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: delta
+
+        end subroutine pcg_advance_8_setseq
+
+
+
+        module elemental subroutine pcg_advance_8_unique(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_8_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(in) :: delta
+
+        end subroutine pcg_advance_8_unique
 
     end interface
 
@@ -1182,6 +1257,39 @@ module pcg_fortran
 
 
 
+    !> Multi-step advance functions (jump-ahead, jump-back)
+    !> The method used here is based on Brown,
+    !> "Random Number Generation with Arbitrary Stride,",
+    !> Transactions of the American Nuclear Society (Nov. 1994).
+    !> The algorithm is very similar to fast exponentiation.
+    !> Even though delta is an unsigned integer,
+    !> we can pass a signed integer to go backwards,
+    !> it just goes "the long way round".
+    interface pcg_advance_lcg
+
+        module pure elemental function pcg_advance_lcg_8(state, init_delta, init_cur_mult, init_cur_plus) result(pcg_lcg)
+
+            !> A dummy argument for this FUNCTION
+            integer(int8), intent(in) :: state
+
+            !> A dummy argument for this FUNCTION
+            integer(int8), intent(in) :: init_delta
+
+            !> A dummy argument for this FUNCTION
+            integer(int8), intent(in) :: init_cur_mult
+
+            !> A dummy argument for this FUNCTION
+            integer(int8), intent(in) :: init_cur_plus
+
+            !> The return value of this FUNCTION
+            integer(int8) :: pcg_lcg
+
+        end function pcg_advance_lcg_8
+
+    end interface pcg_advance_lcg
+
+
+
     interface pcg_output_rxs_m
 
         !> Output function: RXS M
@@ -1454,6 +1562,11 @@ module pcg_fortran
 
 
     interface
+
+        !> A SUBROUTINE for a test: `pcg_*_*_advance_r`
+        module subroutine test_pcg_advance
+        ! There is no dummy arugment for this SUBROUTINE
+        end subroutine test_pcg_advance
 
         !> A SUBROUTINE for a test: `pcg_output_rxs_m`
         module subroutine test_pcg_output_rxs_m

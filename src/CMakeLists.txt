@@ -2,6 +2,12 @@ add_library(
     _pcg_fortran_lib
     STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_fortran.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_lcg_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_mcg_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_oneseq_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_setseq_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_unique_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_default_increment_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_default_multiplier_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_initialize_implementation.f90
