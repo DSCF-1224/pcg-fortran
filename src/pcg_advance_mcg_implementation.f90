@@ -45,4 +45,25 @@ submodule (pcg_fortran) pcg_advance_mcg_implementation
 
     end procedure pcg_advance_16_mcg
 
+
+
+    module procedure pcg_advance_32_mcg
+
+        !> A local variable for this SUBROUTINE
+        integer(int32) :: old_state
+
+
+
+        old_state = rng%state
+
+        rng%state = &!
+            pcg_advance_lcg( &!
+                state         = old_state                 , &!
+                init_delta    = delta                     , &!
+                init_cur_mult = PCG_DEFAULT_MULTIPLIER_32 , &!
+                init_cur_plus = 0_int32                     &!
+            )
+
+    end procedure pcg_advance_32_mcg
+
 end submodule pcg_advance_mcg_implementation

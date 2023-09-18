@@ -45,4 +45,25 @@ submodule (pcg_fortran) pcg_advance_oneseq_implementation
 
     end procedure pcg_advance_16_oneseq
 
+
+
+    module procedure pcg_advance_32_oneseq
+
+        !> A local variable for this SUBROUTINE
+        integer(int32) :: old_state
+
+
+
+        old_state = rng%state
+
+        rng%state = &!
+            pcg_advance_lcg( &!
+                state         = old_state                 , &!
+                init_delta    = delta                     , &!
+                init_cur_mult = PCG_DEFAULT_MULTIPLIER_32 , &!
+                init_cur_plus = PCG_DEFAULT_INCREMENT_32    &!
+            )
+
+    end procedure pcg_advance_32_oneseq
+
 end submodule pcg_advance_oneseq_implementation

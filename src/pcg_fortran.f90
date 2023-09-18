@@ -114,6 +114,8 @@ module pcg_fortran
 
         procedure, pass(rng), private :: pcg_step_for_seeding_32
 
+        procedure(pcg_advance_32_abstract), pass(rng), private, deferred :: advance
+
         generic, public  :: default_increment  => pcg_add_default_increment_32
         generic, public  :: default_multiplier => pcg_multiply_default_multiplier_32
         generic, private :: step_for_seeding   => pcg_step_for_seeding_32
@@ -309,6 +311,7 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: advance    => pcg_advance_32_mcg
         procedure, pass(rng), public  :: initialize => pcg_initialize_mcg_32
         procedure, pass(rng), public  :: seed       => pcg_seed_32_mcg
         procedure, pass(rng), private :: step       => pcg_step_32_mcg
@@ -322,6 +325,7 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: advance    => pcg_advance_32_oneseq
         procedure, pass(rng), public  :: initialize => pcg_initialize_oneseq_32
         procedure, pass(rng), public  :: seed       => pcg_seed_32_oneseq
         procedure, pass(rng), private :: step       => pcg_step_32_oneseq
@@ -339,6 +343,7 @@ module pcg_fortran
 
         procedure, pass(rng), private :: pcg_seed_32_setseq
 
+        procedure, pass(rng), private :: advance    => pcg_advance_32_setseq
         procedure, pass(rng), public  :: initialize => pcg_initialize_setseq_32
         procedure, pass(rng), private :: step       => pcg_step_32_setseq
 
@@ -353,6 +358,7 @@ module pcg_fortran
 
         contains
 
+        procedure, pass(rng), private :: advance    => pcg_advance_32_unique
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_32
         procedure, pass(rng), public  :: seed       => pcg_seed_32_unique
         procedure, pass(rng), private :: step       => pcg_step_32_unique
@@ -593,6 +599,66 @@ module pcg_fortran
             integer(int16), intent(in) :: delta
 
         end subroutine pcg_advance_16_unique
+
+
+
+        module elemental subroutine pcg_advance_32_abstract(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_32_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: delta
+
+        end subroutine pcg_advance_32_abstract
+
+
+
+        module elemental subroutine pcg_advance_32_mcg(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_mcg_32_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: delta
+
+        end subroutine pcg_advance_32_mcg
+
+
+
+        module elemental subroutine pcg_advance_32_oneseq(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_oneseq_32_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: delta
+
+        end subroutine pcg_advance_32_oneseq
+
+
+
+        module elemental subroutine pcg_advance_32_setseq(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_setseq_32_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: delta
+
+        end subroutine pcg_advance_32_setseq
+
+
+
+        module elemental subroutine pcg_advance_32_unique(rng, delta)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_unique_32_type), target, intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(in) :: delta
+
+        end subroutine pcg_advance_32_unique
 
     end interface
 
@@ -1372,6 +1438,27 @@ module pcg_fortran
             integer(int16) :: pcg_lcg
 
         end function pcg_advance_lcg_16
+
+
+
+        module pure elemental function pcg_advance_lcg_32(state, init_delta, init_cur_mult, init_cur_plus) result(pcg_lcg)
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: state
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: init_delta
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: init_cur_mult
+
+            !> A dummy argument for this FUNCTION
+            integer(int32), intent(in) :: init_cur_plus
+
+            !> The return value of this FUNCTION
+            integer(int32) :: pcg_lcg
+
+        end function pcg_advance_lcg_32
 
     end interface pcg_advance_lcg
 
