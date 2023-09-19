@@ -7,6 +7,27 @@ module pcg_fortran
     implicit none
 
     private
+
+    public  :: pcg_state_mcg_8_type
+    public  :: pcg_state_mcg_16_type
+    public  :: pcg_state_mcg_32_type
+    public  :: pcg_state_mcg_64_type
+
+    public  :: pcg_state_oneseq_8_type
+    public  :: pcg_state_oneseq_16_type
+    public  :: pcg_state_oneseq_32_type
+    public  :: pcg_state_oneseq_64_type
+
+    public  :: pcg_state_setseq_8_type
+    public  :: pcg_state_setseq_16_type
+    public  :: pcg_state_setseq_32_type
+    public  :: pcg_state_setseq_64_type
+
+    public  :: pcg_state_unique_8_type
+    public  :: pcg_state_unique_16_type
+    public  :: pcg_state_unique_32_type
+    public  :: pcg_state_unique_64_type
+
     public  :: test_pcg_advance
     public  :: test_pcg_output_rxs_m
     public  :: test_pcg_output_rxs_m_xs
