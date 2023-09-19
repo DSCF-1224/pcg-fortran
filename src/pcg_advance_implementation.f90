@@ -50,7 +50,7 @@ submodule (pcg_fortran) pcg_advance_implementation
         ! write the results of this test
         select type(rng)
 
-            class is(pcg_state_basic_8_type)
+            class is(pcg_state_8_type)
             block
 
                 !> A local variable for this BLOCK
@@ -59,138 +59,22 @@ submodule (pcg_fortran) pcg_advance_implementation
 
 
                 do state = 0_int8, (huge(state) - 1_int8)
-                    rng%state = state
-                    call rng%advance(DELTA_INT8)
-                    write(write_unit, FMT_WRITE_BASIC) state, rng%state
-                end do
-
-                state     = huge(state)
-                rng%state = state
-                call rng%advance(DELTA_INT8)
-                write(write_unit, FMT_WRITE_BASIC) state, rng%state
-
-                state     = state + 1_int8
-                rng%state = state
-                call rng%advance(DELTA_INT8)
-                write(write_unit, FMT_WRITE_BASIC) state, rng%state
-
-                do state = ( - huge(state) ), (- 1_int8)
-                    rng%state = state
-                    call rng%advance(DELTA_INT8)
-                    write(write_unit, FMT_WRITE_BASIC) state, rng%state
-                end do
-
-            end block
-
-            class is(pcg_state_basic_16_type)
-            block
-
-                !> A local variable for this BLOCK
-                integer(int16) :: state
-
-
-
-                do state = 0_int16, (huge(state) - 1_int16)
-                    rng%state = state
-                    call rng%advance(DELTA_INT16)
-                    write(write_unit, FMT_WRITE_BASIC) state, rng%state
-                end do
-
-                state     = huge(state)
-                rng%state = state
-                call rng%advance(DELTA_INT16)
-                write(write_unit, FMT_WRITE_BASIC) state, rng%state
-
-                state     = state + 1_int16
-                rng%state = state
-                call rng%advance(DELTA_INT16)
-                write(write_unit, FMT_WRITE_BASIC) state, rng%state
-
-                do state = ( - huge(state) ), (- 1_int16)
-                    rng%state = state
-                    call rng%advance(DELTA_INT16)
-                    write(write_unit, FMT_WRITE_BASIC) state, rng%state
-                end do
-
-            end block
-
-            class is(pcg_state_basic_32_type)
-            block
-
-                !> A local variable for this BLOCK
-                integer(int32) :: state
-
-
-
-                state = 1_int32
-
-                do
-                    rng%state = state
-                    call rng%advance(DELTA_INT32)
-                    write(write_unit, FMT_WRITE_BASIC) state, rng%state
-                    if (state .lt. 0_int32) exit
-                    state = state + state
-                end do
-
-            end block
-
-            class is(pcg_state_basic_64_type)
-            block
-
-                !> A local variable for this BLOCK
-                integer(int64) :: state
-
-
-
-                state = 1_int64
-
-                do
-                    rng%state = state
-                    call rng%advance(DELTA_INT64)
-                    write(write_unit, FMT_WRITE_BASIC) state, rng%state
-                    if (state .lt. 0_int64) exit
-                    state = state + state
-                end do
-
-            end block
-
-            class is(pcg_state_setseq_8_type)
-            block
-
-                !> A local variable for this BLOCK
-                integer(int8) :: state
-
-
-
-                do state = 0_int8, (huge(state) - 1_int8)
-                    call rng%initialize()
-                    rng%state = state
-                    call rng%advance(DELTA_INT8)
-                    write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                    call test_pcg_advance_core_8(write_unit, state, rng)
                 end do
 
                 state = huge(state)
-                call rng%initialize()
-                rng%state = state
-                call rng%advance(DELTA_INT8)
-                write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                call test_pcg_advance_core_8(write_unit, state, rng)
 
                 state = state + 1_int8
-                call rng%initialize()
-                rng%state = state
-                call rng%advance(DELTA_INT8)
-                write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                call test_pcg_advance_core_8(write_unit, state, rng)
 
                 do state = ( - huge(state) ), (- 1_int8)
-                    call rng%initialize()
-                    rng%state = state
-                    call rng%advance(DELTA_INT8)
-                    write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                    call test_pcg_advance_core_8(write_unit, state, rng)
                 end do
 
             end block
 
-            class is(pcg_state_setseq_16_type)
+            class is(pcg_state_16_type)
             block
 
                 !> A local variable for this BLOCK
@@ -199,34 +83,22 @@ submodule (pcg_fortran) pcg_advance_implementation
 
 
                 do state = 0_int16, (huge(state) - 1_int16)
-                    call rng%initialize()
-                    rng%state = state
-                    call rng%advance(DELTA_INT16)
-                    write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                    call test_pcg_advance_core_16(write_unit, state, rng)
                 end do
 
                 state = huge(state)
-                call rng%initialize()
-                rng%state = state
-                call rng%advance(DELTA_INT16)
-                write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                call test_pcg_advance_core_16(write_unit, state, rng)
 
                 state = state + 1_int16
-                call rng%initialize()
-                rng%state = state
-                call rng%advance(DELTA_INT16)
-                write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                call test_pcg_advance_core_16(write_unit, state, rng)
 
                 do state = ( - huge(state) ), (- 1_int16)
-                    call rng%initialize()
-                    rng%state = state
-                    call rng%advance(DELTA_INT16)
-                    write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                    call test_pcg_advance_core_16(write_unit, state, rng)
                 end do
 
             end block
 
-            class is(pcg_state_setseq_32_type)
+            class is(pcg_state_32_type)
             block
 
                 !> A local variable for this BLOCK
@@ -237,17 +109,14 @@ submodule (pcg_fortran) pcg_advance_implementation
                 state = 1_int32
 
                 do
-                    call rng%initialize()
-                    rng%state = state
-                    call rng%advance(DELTA_INT32)
-                    write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                    call test_pcg_advance_core_32(write_unit, state, rng)
                     if (state .lt. 0_int32) exit
                     state = state + state
                 end do
 
             end block
 
-            class is(pcg_state_setseq_64_type)
+            class is(pcg_state_64_type)
             block
 
                 !> A local variable for this BLOCK
@@ -258,10 +127,7 @@ submodule (pcg_fortran) pcg_advance_implementation
                 state = 1_int64
 
                 do
-                    call rng%initialize()
-                    rng%state = state
-                    call rng%advance(DELTA_INT64)
-                    write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+                    call test_pcg_advance_core_64(write_unit, state, rng)
                     if (state .lt. 0_int64) exit
                     state = state + state
                 end do
@@ -276,5 +142,128 @@ submodule (pcg_fortran) pcg_advance_implementation
         close(write_unit)
 
     end procedure test_pcg_advance
+
+
+
+    subroutine test_pcg_advance_core_8(write_unit, state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int8), intent(in) :: state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_8_type), intent(inout) :: rng
+
+
+
+        rng%state = state
+        call rng%advance(DELTA_INT8)
+
+        select type(rng)
+
+            class is(pcg_state_basic_8_type)
+            write(write_unit, FMT_WRITE_BASIC) state, rng%state
+
+            type is(pcg_state_setseq_8_type)
+            write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+
+        end select
+
+    end subroutine test_pcg_advance_core_8
+
+
+
+
+    subroutine test_pcg_advance_core_16(write_unit, state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int16), intent(in) :: state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_16_type), intent(inout) :: rng
+
+
+
+        rng%state = state
+        call rng%advance(DELTA_INT16)
+
+        select type(rng)
+
+            class is(pcg_state_basic_16_type)
+            write(write_unit, FMT_WRITE_BASIC) state, rng%state
+
+            type is(pcg_state_setseq_16_type)
+            write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+
+        end select
+
+    end subroutine test_pcg_advance_core_16
+
+
+
+
+    subroutine test_pcg_advance_core_32(write_unit, state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int32), intent(in) :: state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_32_type), intent(inout) :: rng
+
+
+
+        rng%state = state
+        call rng%advance(DELTA_INT32)
+
+        select type(rng)
+
+            class is(pcg_state_basic_32_type)
+            write(write_unit, FMT_WRITE_BASIC) state, rng%state
+
+            type is(pcg_state_setseq_32_type)
+            write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+
+        end select
+
+    end subroutine test_pcg_advance_core_32
+
+
+
+
+    subroutine test_pcg_advance_core_64(write_unit, state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int64), intent(in) :: state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_64_type), intent(inout) :: rng
+
+
+
+        rng%state = state
+        call rng%advance(DELTA_INT64)
+
+        select type(rng)
+
+            class is(pcg_state_basic_64_type)
+            write(write_unit, FMT_WRITE_BASIC) state, rng%state
+
+            type is(pcg_state_setseq_64_type)
+            write(write_unit, FMT_WRITE_SETSEQ) state, rng%state, rng%inc
+
+        end select
+
+    end subroutine test_pcg_advance_core_64
 
 end submodule pcg_advance_implementation
