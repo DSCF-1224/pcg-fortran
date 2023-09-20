@@ -58,18 +58,12 @@ submodule (pcg_fortran) pcg_advance_implementation
 
 
 
-                do state = 0_int8, (huge(state) - 1_int8)
+                state = 0_int8
+
+                do
                     call test_pcg_advance_core_8(write_unit, state, rng)
-                end do
-
-                state = huge(state)
-                call test_pcg_advance_core_8(write_unit, state, rng)
-
-                state = state + 1_int8
-                call test_pcg_advance_core_8(write_unit, state, rng)
-
-                do state = ( - huge(state) ), (- 1_int8)
-                    call test_pcg_advance_core_8(write_unit, state, rng)
+                    if (state .eq. -1_int8) exit
+                    state = state + 1_int8
                 end do
 
             end block
@@ -82,18 +76,12 @@ submodule (pcg_fortran) pcg_advance_implementation
 
 
 
-                do state = 0_int16, (huge(state) - 1_int16)
+                state = 0_int16
+
+                do
                     call test_pcg_advance_core_16(write_unit, state, rng)
-                end do
-
-                state = huge(state)
-                call test_pcg_advance_core_16(write_unit, state, rng)
-
-                state = state + 1_int16
-                call test_pcg_advance_core_16(write_unit, state, rng)
-
-                do state = ( - huge(state) ), (- 1_int16)
-                    call test_pcg_advance_core_16(write_unit, state, rng)
+                    if (state .eq. -1_int16) exit
+                    state = state + 1_int16
                 end do
 
             end block
