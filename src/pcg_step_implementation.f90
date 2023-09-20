@@ -55,26 +55,12 @@ submodule (pcg_fortran) pcg_step_implementation
 
 
 
-                    do state = 0_int8, (huge(state) - 1_int8)
-                        rng%state = state
-                        call rng%step()
-                        write(write_unit, FMT_WRITE) state, rng%state
-                    end do
+                    state = 0_int8
 
-                    state     = huge(state)
-                    rng%state = state
-                    call rng%step()
-                    write(write_unit, FMT_WRITE) state, rng%state
-
-                    state     = state + 1_int8
-                    rng%state = state
-                    call rng%step()
-                    write(write_unit, FMT_WRITE) state, rng%state
-
-                    do state = ( - huge(state) ), (- 1_int8)
-                        rng%state = state
-                        call rng%step()
-                        write(write_unit, FMT_WRITE) state, rng%state
+                    do
+                        call test_pcg_step_core_8(write_unit, state, rng)
+                        if (state .eq. -1_int8) exit
+                        state = state + 1_int8
                     end do
 
                 end block
@@ -87,27 +73,12 @@ submodule (pcg_fortran) pcg_step_implementation
                     integer(int16) :: state
 
 
+                    state = 0_int16
 
-                    do state = 0_int16, (huge(state) - 1_int16)
-                        rng%state = state
-                        call rng%step()
-                        write(write_unit, FMT_WRITE) state, rng%state
-                    end do
-
-                    state     = huge(state)
-                    rng%state = state
-                    call rng%step()
-                    write(write_unit, FMT_WRITE) state, rng%state
-
-                    state     = state + 1_int16
-                    rng%state = state
-                    call rng%step()
-                    write(write_unit, FMT_WRITE) state, rng%state
-
-                    do state = ( - huge(state) ), (- 1_int16)
-                        rng%state = state
-                        call rng%step()
-                        write(write_unit, FMT_WRITE) state, rng%state
+                    do
+                        call test_pcg_step_core_16(write_unit, state, rng)
+                        if (state .eq. -1_int16) exit
+                        state = state + 1_int16
                     end do
 
                 end block
@@ -122,9 +93,7 @@ submodule (pcg_fortran) pcg_step_implementation
                     state = 1_int32
 
                     do
-                        rng%state = state
-                        call rng%step()
-                        write(write_unit, FMT_WRITE) state, rng%state
+                        call test_pcg_step_core_32(write_unit, state, rng)
                         if (state .lt. 0_int32) exit
                         state = state + state
                     end do
@@ -141,9 +110,7 @@ submodule (pcg_fortran) pcg_step_implementation
                     state = 1_int64
 
                     do
-                        rng%state = state
-                        call rng%step()
-                        write(write_unit, FMT_WRITE) state, rng%state
+                        call test_pcg_step_core_64(write_unit, state, rng)
                         if (state .lt. 0_int64) exit
                         state = state + state
                     end do
@@ -156,5 +123,81 @@ submodule (pcg_fortran) pcg_step_implementation
         close(write_unit)
 
     end procedure test_pcg_step
+
+
+
+    subroutine test_pcg_step_core_8(write_unit, state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int8), intent(in) :: state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_8_type), intent(inout) :: rng
+
+        rng%state = state
+        call rng%step()
+        write(write_unit, FMT_WRITE) state, rng%state
+
+    end subroutine test_pcg_step_core_8
+
+
+
+    subroutine test_pcg_step_core_16(write_unit, state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int16), intent(in) :: state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_16_type), intent(inout) :: rng
+
+        rng%state = state
+        call rng%step()
+        write(write_unit, FMT_WRITE) state, rng%state
+
+    end subroutine test_pcg_step_core_16
+
+
+
+    subroutine test_pcg_step_core_32(write_unit, state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int32), intent(in) :: state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_32_type), intent(inout) :: rng
+
+        rng%state = state
+        call rng%step()
+        write(write_unit, FMT_WRITE) state, rng%state
+
+    end subroutine test_pcg_step_core_32
+
+
+
+    subroutine test_pcg_step_core_64(write_unit, state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int64), intent(in) :: state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_64_type), intent(inout) :: rng
+
+        rng%state = state
+        call rng%step()
+        write(write_unit, FMT_WRITE) state, rng%state
+
+    end subroutine test_pcg_step_core_64
 
 end submodule pcg_step_implementation
