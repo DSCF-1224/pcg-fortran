@@ -158,6 +158,7 @@ submodule (pcg_fortran) pcg_advance_implementation
 
 
 
+        call rng%initialize()
         rng%state = state
         call rng%advance(DELTA_INT8)
 
@@ -189,6 +190,7 @@ submodule (pcg_fortran) pcg_advance_implementation
 
 
 
+        call rng%initialize()
         rng%state = state
         call rng%advance(DELTA_INT16)
 
@@ -220,6 +222,7 @@ submodule (pcg_fortran) pcg_advance_implementation
 
 
 
+        call rng%initialize()
         rng%state = state
         call rng%advance(DELTA_INT32)
 
@@ -251,6 +254,7 @@ submodule (pcg_fortran) pcg_advance_implementation
 
 
 
+        call rng%initialize()
         rng%state = state
         call rng%advance(DELTA_INT64)
 
