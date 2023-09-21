@@ -1846,9 +1846,14 @@ module pcg_fortran
     interface
 
         !> A SUBROUTINE for a test: `pcg_*_*_advance_r`
-        module subroutine test_pcg_advance
-        ! There is no dummy arugment for this SUBROUTINE
+        module subroutine test_pcg_advance(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_type), intent(inout) :: rng
+
         end subroutine test_pcg_advance
+
+
 
         !> A SUBROUTINE for a test: `pcg_output_rxs_m`
         module subroutine test_pcg_output_rxs_m
