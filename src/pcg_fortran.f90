@@ -1885,9 +1885,14 @@ module pcg_fortran
         ! There is no dummy arugment for this SUBROUTINE
         end subroutine test_pcg_output_xsl_rr_rr
 
-        !> A SUBROUTINE for a test: `pcg_seed_*_*`
-        module subroutine test_pcg_seed
-        ! There is no dummy arugment for this SUBROUTINE
+
+
+        !> A SUBROUTINE for a test: `pcg_*_*_srandom_r`
+        module subroutine test_pcg_seed(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_type), intent(inout) :: rng
+
         end subroutine test_pcg_seed
 
         !> A SUBROUTINE for a test: `pcg_step_*_*`
