@@ -1895,9 +1895,14 @@ module pcg_fortran
 
         end subroutine test_pcg_seed
 
-        !> A SUBROUTINE for a test: `pcg_step_*_*`
-        module subroutine test_pcg_step
-        ! There is no dummy arugment for this SUBROUTINE
+
+
+        !> A SUBROUTINE for a test: `pcg_*_*_step_r`
+        module subroutine test_pcg_step(rng)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_type), intent(inout) :: rng
+
         end subroutine test_pcg_step
 
     end interface
