@@ -1,0 +1,9 @@
+add_library(
+    _pcg_harvest_lib
+    STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/allocate_fields_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/deallocate_fields_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/is_equal_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/utilities_implementation.f90
+)
