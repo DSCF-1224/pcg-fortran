@@ -10,7 +10,7 @@ submodule (pcg_harvest) utilities_implementation
 
     module procedure is_ok
 
-        is_ok = (stat .eq. 0)
+        is_ok = (stat .eq. STAT_OK)
 
     end procedure is_ok
 

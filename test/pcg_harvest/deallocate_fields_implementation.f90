@@ -13,6 +13,8 @@ submodule (pcg_harvest) deallocate_fields_implementation
         associate( errmsg => harvest%errmsg )
         associate( stat   => harvest%stat   )
 
+            stat = STAT_OK
+
             if ( allocated(harvest%c) ) then
                 deallocate(harvest%c, stat=stat, errmsg=errmsg)
                 if ( .not. is_ok(stat) ) return
@@ -35,6 +37,8 @@ submodule (pcg_harvest) deallocate_fields_implementation
         associate( errmsg => harvest%errmsg )
         associate( stat   => harvest%stat   )
 
+            stat = STAT_OK
+
             if ( allocated(harvest%c) ) then
                 deallocate(harvest%c, stat=stat, errmsg=errmsg)
                 if ( .not. is_ok(stat) ) return
@@ -56,6 +60,8 @@ submodule (pcg_harvest) deallocate_fields_implementation
         associate( errmsg => harvest%errmsg )
         associate( stat   => harvest%stat   )
 
+            stat = STAT_OK
+
             if ( allocated(harvest%c) ) then
                 deallocate(harvest%c, stat=stat, errmsg=errmsg)
                 if ( .not. is_ok(stat) ) return
@@ -76,6 +82,8 @@ submodule (pcg_harvest) deallocate_fields_implementation
 
         associate( errmsg => harvest%errmsg )
         associate( stat   => harvest%stat   )
+
+            stat = STAT_OK
 
             if ( allocated(harvest%c) ) then
                 deallocate(harvest%c, stat=stat, errmsg=errmsg)

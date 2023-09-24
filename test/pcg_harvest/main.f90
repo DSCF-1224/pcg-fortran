@@ -104,6 +104,13 @@ module pcg_harvest
 
 
 
+    !> A PARAMETER for this MODULE
+    !> `ALLOCATE` / `DEALLOCATE` returns this value
+    !> if the statement had executed successfully
+    integer, private, parameter :: STAT_OK = 0
+
+
+
     interface
 
         module pure elemental function is_equal_abstract(harvest) result(is_equal)
