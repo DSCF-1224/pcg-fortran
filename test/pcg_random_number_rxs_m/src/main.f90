@@ -16,20 +16,20 @@ program test
 
 
 
-    if ( .not. pcg_mcg_16_rxs_m_8_random_r()     )  print *, 'Failed: pcg_mcg_16_rxs_m_8_random_r'
-    if ( .not. pcg_oneseq_16_rxs_m_8_random_r()  )  print *, 'Failed: pcg_oneseq_16_rxs_m_8_random_r'
-    if ( .not. pcg_setseq_16_rxs_m_8_random_r()  )  print *, 'Failed: pcg_setseq_16_rxs_m_8_random_r'
-    if ( .not. pcg_unique_16_rxs_m_8_random_r()  )  print *, 'Failed: pcg_unique_16_rxs_m_8_random_r'
+    if ( .not. test_pcg_mcg_16_rxs_m_8_random_r()     )  print *, 'Failed: pcg_mcg_16_rxs_m_8_random_r'
+    if ( .not. test_pcg_oneseq_16_rxs_m_8_random_r()  )  print *, 'Failed: pcg_oneseq_16_rxs_m_8_random_r'
+    if ( .not. test_pcg_setseq_16_rxs_m_8_random_r()  )  print *, 'Failed: pcg_setseq_16_rxs_m_8_random_r'
+    if ( .not. test_pcg_unique_16_rxs_m_8_random_r()  )  print *, 'Failed: pcg_unique_16_rxs_m_8_random_r'
 
-    if ( .not. pcg_mcg_32_rxs_m_16_random_r()    )  print *, 'Failed: pcg_mcg_32_rxs_m_16_random_r'
-    if ( .not. pcg_oneseq_32_rxs_m_16_random_r() )  print *, 'Failed: pcg_oneseq_32_rxs_m_16_random_r'
-    if ( .not. pcg_setseq_32_rxs_m_16_random_r() )  print *, 'Failed: pcg_setseq_32_rxs_m_16_random_r'
-    if ( .not. pcg_unique_32_rxs_m_16_random_r() )  print *, 'Failed: pcg_unique_32_rxs_m_16_random_r'
+    if ( .not. test_pcg_mcg_32_rxs_m_16_random_r()    )  print *, 'Failed: pcg_mcg_32_rxs_m_16_random_r'
+    if ( .not. test_pcg_oneseq_32_rxs_m_16_random_r() )  print *, 'Failed: pcg_oneseq_32_rxs_m_16_random_r'
+    if ( .not. test_pcg_setseq_32_rxs_m_16_random_r() )  print *, 'Failed: pcg_setseq_32_rxs_m_16_random_r'
+    if ( .not. test_pcg_unique_32_rxs_m_16_random_r() )  print *, 'Failed: pcg_unique_32_rxs_m_16_random_r'
 
-    if ( .not. pcg_mcg_64_rxs_m_32_random_r()    )  print *, 'Failed: pcg_mcg_64_rxs_m_32_random_r'
-    if ( .not. pcg_oneseq_64_rxs_m_32_random_r() )  print *, 'Failed: pcg_oneseq_64_rxs_m_32_random_r'
-    if ( .not. pcg_setseq_64_rxs_m_32_random_r() )  print *, 'Failed: pcg_setseq_64_rxs_m_32_random_r'
-    if ( .not. pcg_unique_64_rxs_m_32_random_r() )  print *, 'Failed: pcg_unique_64_rxs_m_32_random_r'
+    if ( .not. test_pcg_mcg_64_rxs_m_32_random_r()    )  print *, 'Failed: pcg_mcg_64_rxs_m_32_random_r'
+    if ( .not. test_pcg_oneseq_64_rxs_m_32_random_r() )  print *, 'Failed: pcg_oneseq_64_rxs_m_32_random_r'
+    if ( .not. test_pcg_setseq_64_rxs_m_32_random_r() )  print *, 'Failed: pcg_setseq_64_rxs_m_32_random_r'
+    if ( .not. test_pcg_unique_64_rxs_m_32_random_r() )  print *, 'Failed: pcg_unique_64_rxs_m_32_random_r'
 
     print *, 'Finished successfully'
 
@@ -39,7 +39,7 @@ program test
 
 
 
-    function pcg_mcg_16_rxs_m_8_random_r() result(stat)
+    function test_pcg_mcg_16_rxs_m_8_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -73,11 +73,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_mcg_16_rxs_m_8_random_r
+    end function test_pcg_mcg_16_rxs_m_8_random_r
 
 
 
-    function pcg_oneseq_16_rxs_m_8_random_r() result(stat)
+    function test_pcg_oneseq_16_rxs_m_8_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -111,11 +111,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_oneseq_16_rxs_m_8_random_r
+    end function test_pcg_oneseq_16_rxs_m_8_random_r
 
 
 
-    function pcg_setseq_16_rxs_m_8_random_r() result(stat)
+    function test_pcg_setseq_16_rxs_m_8_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -149,11 +149,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_setseq_16_rxs_m_8_random_r
+    end function test_pcg_setseq_16_rxs_m_8_random_r
 
 
 
-    function pcg_unique_16_rxs_m_8_random_r() result(stat)
+    function test_pcg_unique_16_rxs_m_8_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -187,11 +187,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_unique_16_rxs_m_8_random_r
+    end function test_pcg_unique_16_rxs_m_8_random_r
 
 
 
-    function pcg_mcg_32_rxs_m_16_random_r() result(stat)
+    function test_pcg_mcg_32_rxs_m_16_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -225,11 +225,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_mcg_32_rxs_m_16_random_r
+    end function test_pcg_mcg_32_rxs_m_16_random_r
 
 
 
-    function pcg_oneseq_32_rxs_m_16_random_r() result(stat)
+    function test_pcg_oneseq_32_rxs_m_16_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -263,11 +263,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_oneseq_32_rxs_m_16_random_r
+    end function test_pcg_oneseq_32_rxs_m_16_random_r
 
 
 
-    function pcg_setseq_32_rxs_m_16_random_r() result(stat)
+    function test_pcg_setseq_32_rxs_m_16_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -301,11 +301,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_setseq_32_rxs_m_16_random_r
+    end function test_pcg_setseq_32_rxs_m_16_random_r
 
 
 
-    function pcg_unique_32_rxs_m_16_random_r() result(stat)
+    function test_pcg_unique_32_rxs_m_16_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -339,11 +339,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_unique_32_rxs_m_16_random_r
+    end function test_pcg_unique_32_rxs_m_16_random_r
 
 
 
-    function pcg_mcg_64_rxs_m_32_random_r() result(stat)
+    function test_pcg_mcg_64_rxs_m_32_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -377,11 +377,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_mcg_64_rxs_m_32_random_r
+    end function test_pcg_mcg_64_rxs_m_32_random_r
 
 
 
-    function pcg_oneseq_64_rxs_m_32_random_r() result(stat)
+    function test_pcg_oneseq_64_rxs_m_32_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -415,11 +415,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_oneseq_64_rxs_m_32_random_r
+    end function test_pcg_oneseq_64_rxs_m_32_random_r
 
 
 
-    function pcg_setseq_64_rxs_m_32_random_r() result(stat)
+    function test_pcg_setseq_64_rxs_m_32_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -453,11 +453,11 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_setseq_64_rxs_m_32_random_r
+    end function test_pcg_setseq_64_rxs_m_32_random_r
 
 
 
-    function pcg_unique_64_rxs_m_32_random_r() result(stat)
+    function test_pcg_unique_64_rxs_m_32_random_r() result(stat)
 
         !> The return value of this FUNCTION
         logical :: stat
@@ -491,6 +491,6 @@ program test
     
         stat = harvest%is_equal()
 
-    end function pcg_unique_64_rxs_m_32_random_r
+    end function test_pcg_unique_64_rxs_m_32_random_r
 
 end program test
