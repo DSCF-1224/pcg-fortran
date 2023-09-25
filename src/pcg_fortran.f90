@@ -90,6 +90,7 @@ module pcg_fortran
         procedure, nopass, private :: pcg_multiply_default_multiplier_8
 
         procedure, pass(rng), private :: pcg_step_for_seeding_8
+        procedure, pass(rng), private :: pcg_random_number_8_rxs_m_xs_8
 
         procedure(pcg_advance_8_abstract), pass(rng), private, deferred :: advance
 
@@ -231,6 +232,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: seed       => pcg_seed_8_oneseq
         procedure, pass(rng), private :: step       => pcg_step_8_oneseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_8_rxs_m_xs_8
+
     end type pcg_state_oneseq_8_type
 
 
@@ -249,6 +252,8 @@ module pcg_fortran
         procedure, pass(rng), private :: step       => pcg_step_8_setseq
 
         generic, public :: seed => pcg_seed_8_setseq
+
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_8_rxs_m_xs_8
 
     end type pcg_state_setseq_8_type
 
@@ -957,6 +962,25 @@ module pcg_fortran
             class(pcg_state_unique_64_type), intent(out) :: rng
 
         end subroutine pcg_initialize_unique_64
+
+    end interface
+
+
+
+    !> Generation `SUBROUTINE`s for `RXS M XS`
+    interface
+
+        !> `pcg_oneseq_8_rxs_m_xs_8_random_r`
+        !> `pcg_setseq_8_rxs_m_xs_8_random_r`
+        module subroutine pcg_random_number_8_rxs_m_xs_8(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_8_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(out) :: harvest
+
+        end subroutine pcg_random_number_8_rxs_m_xs_8
 
     end interface
 
