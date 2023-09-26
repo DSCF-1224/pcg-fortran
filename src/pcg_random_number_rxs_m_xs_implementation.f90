@@ -1,4 +1,4 @@
-submodule (pcg_fortran) pcg_random_number_rxs_m_implementation
+submodule (pcg_fortran) pcg_random_number_rxs_m_xs_implementation
 
     implicit none
     contains
@@ -16,4 +16,4 @@ submodule (pcg_fortran) pcg_random_number_rxs_m_implementation
 
     end procedure pcg_random_number_8_rxs_m_xs_8
 
-end submodule pcg_random_number_rxs_m_implementation
+end submodule pcg_random_number_rxs_m_xs_implementation
