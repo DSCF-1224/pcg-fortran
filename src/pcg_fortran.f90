@@ -113,6 +113,7 @@ module pcg_fortran
         procedure, nopass, private :: pcg_multiply_default_multiplier_16
 
         procedure, pass(rng), private :: pcg_step_for_seeding_16
+        procedure, pass(rng), private :: pcg_random_number_16_rxs_m_xs_16
 
         procedure(pcg_advance_16_abstract), pass(rng), private, deferred :: advance
 
@@ -297,6 +298,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: seed       => pcg_seed_16_oneseq
         procedure, pass(rng), private :: step       => pcg_step_16_oneseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_16_rxs_m_xs_16
+
     end type pcg_state_oneseq_16_type
 
 
@@ -316,6 +319,8 @@ module pcg_fortran
 
         generic, public :: seed => pcg_seed_16_setseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_16_rxs_m_xs_16
+
     end type pcg_state_setseq_16_type
 
 
@@ -329,6 +334,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_16
         procedure, pass(rng), public  :: seed       => pcg_seed_16_unique
         procedure, pass(rng), private :: step       => pcg_step_16_unique
+
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_16_rxs_m_xs_16
 
     end type pcg_state_unique_16_type
 
@@ -981,6 +988,21 @@ module pcg_fortran
             integer(int8), intent(out) :: harvest
 
         end subroutine pcg_random_number_8_rxs_m_xs_8
+
+
+
+        !> `pcg_oneseq_16_rxs_m_xs_16_random_r`
+        !> `pcg_setseq_16_rxs_m_xs_16_random_r`
+        !> `pcg_unique_16_rxs_m_xs_16_random_r`
+        module subroutine pcg_random_number_16_rxs_m_xs_16(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(out) :: harvest
+
+        end subroutine pcg_random_number_16_rxs_m_xs_16
 
     end interface
 
