@@ -28,7 +28,8 @@
 #define RENAME_PCG_STATE_INITIALIZERS(rng_type_cap, rng_type_sml) \
     RENAME_PCG_STATE_INITIALIZER(rng_type_cap, rng_type_sml,  8) \
     RENAME_PCG_STATE_INITIALIZER(rng_type_cap, rng_type_sml, 16) \
-    RENAME_PCG_STATE_INITIALIZER(rng_type_cap, rng_type_sml, 32)
+    RENAME_PCG_STATE_INITIALIZER(rng_type_cap, rng_type_sml, 32) \
+    RENAME_PCG_STATE_INITIALIZER(rng_type_cap, rng_type_sml, 64)
 
 
 
@@ -46,6 +47,7 @@
 TYPEDEF_PCG_STATE( 8)
 TYPEDEF_PCG_STATE(16)
 TYPEDEF_PCG_STATE(32)
+TYPEDEF_PCG_STATE(64)
 
 
 
@@ -108,4 +110,25 @@ void signed_pcg_setseq_32_rxs_m_xs_32_random_r(const int32_t harvest_size, int32
 void signed_pcg_unique_32_rxs_m_xs_32_random_r(const int32_t harvest_size, int32_t harvest[])
 {
     SIGNED_PCG_RXS_M_RANDOM_R(unique, 32, 32)
+}
+
+
+
+void signed_pcg_oneseq_64_rxs_m_xs_64_random_r(const int32_t harvest_size, int64_t harvest[])
+{
+    SIGNED_PCG_RXS_M_RANDOM_R(oneseq, 64, 64)
+}
+
+
+
+void signed_pcg_unique_64_rxs_m_xs_64_random_r(const int32_t harvest_size, int64_t harvest[])
+{
+    SIGNED_PCG_RXS_M_RANDOM_R(unique, 64, 64)
+}
+
+
+
+void signed_pcg_setseq_64_rxs_m_xs_64_random_r(const int32_t harvest_size, int64_t harvest[])
+{
+    SIGNED_PCG_RXS_M_RANDOM_R(setseq, 64, 64)
 }

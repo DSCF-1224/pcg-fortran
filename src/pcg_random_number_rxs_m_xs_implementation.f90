@@ -42,4 +42,17 @@ submodule (pcg_fortran) pcg_random_number_rxs_m_xs_implementation
 
     end procedure pcg_random_number_32_rxs_m_xs_32
 
+
+
+    module procedure pcg_random_number_64_rxs_m_xs_64
+
+        !> A local variable for this SUBROUTINE
+        integer(int64) :: old_state
+
+        old_state = rng%state
+        call rng%step()
+        harvest = pcg_output_rxs_m_xs(old_state)
+
+    end procedure pcg_random_number_64_rxs_m_xs_64
+
 end submodule pcg_random_number_rxs_m_xs_implementation
