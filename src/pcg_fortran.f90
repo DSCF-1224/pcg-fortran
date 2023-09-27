@@ -112,12 +112,15 @@ module pcg_fortran
         procedure, nopass, private :: pcg_multiply_default_multiplier_16
 
         procedure, pass(rng), private :: pcg_step_for_seeding_16
+        procedure, pass(rng), private :: pcg_random_number_16_xsh_rr_8
 
         procedure(pcg_advance_16_abstract), pass(rng), private, deferred :: advance
 
         generic, public  :: default_increment  => pcg_add_default_increment_16
         generic, public  :: default_multiplier => pcg_multiply_default_multiplier_16
         generic, private :: step_for_seeding   => pcg_step_for_seeding_16
+
+        generic, public :: random_number_xsh_rr => pcg_random_number_16_xsh_rr_8
 
     end type pcg_state_16_type
 
@@ -957,6 +960,26 @@ module pcg_fortran
             class(pcg_state_unique_64_type), intent(out) :: rng
 
         end subroutine pcg_initialize_unique_64
+
+    end interface
+
+
+
+    interface
+
+        !> `pcg_mcg_16_xsh_rr_8_random_r`
+        !> `pcg_oneseq_16_xsh_rr_8_random_r`
+        !> `pcg_unique_16_xsh_rr_8_random_r`
+        !> `pcg_setseq_16_xsh_rr_8_random_r`
+        module subroutine pcg_random_number_16_xsh_rr_8(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(out) :: harvest
+
+        end subroutine pcg_random_number_16_xsh_rr_8
 
     end interface
 

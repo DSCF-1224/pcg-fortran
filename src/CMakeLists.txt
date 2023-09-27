@@ -18,6 +18,7 @@ add_library(
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsl_rr_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsl_rr_rr_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_rotr_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_random_number_xsh_rr_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_seed_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_seed_mcg_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_seed_oneseq_implementation.f90
