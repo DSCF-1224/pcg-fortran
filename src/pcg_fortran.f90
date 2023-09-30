@@ -90,6 +90,7 @@ module pcg_fortran
         procedure, nopass, private :: pcg_multiply_default_multiplier_8
 
         procedure, pass(rng), private :: pcg_step_for_seeding_8
+        procedure, pass(rng), private :: pcg_random_number_8_rxs_m_xs_8
 
         procedure(pcg_advance_8_abstract), pass(rng), private, deferred :: advance
 
@@ -112,6 +113,9 @@ module pcg_fortran
         procedure, nopass, private :: pcg_multiply_default_multiplier_16
 
         procedure, pass(rng), private :: pcg_step_for_seeding_16
+        procedure, pass(rng), private :: pcg_random_number_16_rxs_m_8
+        procedure, pass(rng), private :: pcg_random_number_16_rxs_m_xs_16
+        procedure, pass(rng), private :: pcg_random_number_16_xsh_rr_8
         procedure, pass(rng), private :: pcg_random_number_16_xsh_rs_8
 
         procedure(pcg_advance_16_abstract), pass(rng), private, deferred :: advance
@@ -120,6 +124,8 @@ module pcg_fortran
         generic, public  :: default_multiplier => pcg_multiply_default_multiplier_16
         generic, private :: step_for_seeding   => pcg_step_for_seeding_16
 
+        generic, public :: random_number_rxs_m  => pcg_random_number_16_rxs_m_8
+        generic, public :: random_number_xsh_rr => pcg_random_number_16_xsh_rr_8
         generic, public :: random_number_xsh_rs => pcg_random_number_16_xsh_rs_8
 
     end type pcg_state_16_type
@@ -137,6 +143,9 @@ module pcg_fortran
         procedure, nopass, private :: pcg_multiply_default_multiplier_32
 
         procedure, pass(rng), private :: pcg_step_for_seeding_32
+        procedure, pass(rng), private :: pcg_random_number_32_rxs_m_16
+        procedure, pass(rng), private :: pcg_random_number_32_rxs_m_xs_32
+        procedure, pass(rng), private :: pcg_random_number_32_xsh_rr_16
         procedure, pass(rng), private :: pcg_random_number_32_xsh_rs_16
 
         procedure(pcg_advance_32_abstract), pass(rng), private, deferred :: advance
@@ -145,6 +154,8 @@ module pcg_fortran
         generic, public  :: default_multiplier => pcg_multiply_default_multiplier_32
         generic, private :: step_for_seeding   => pcg_step_for_seeding_32
 
+        generic, public :: random_number_rxs_m  => pcg_random_number_32_rxs_m_16
+        generic, public :: random_number_xsh_rr => pcg_random_number_32_xsh_rr_16
         generic, public :: random_number_xsh_rs => pcg_random_number_32_xsh_rs_16
 
     end type pcg_state_32_type
@@ -162,6 +173,9 @@ module pcg_fortran
         procedure, nopass, private :: pcg_multiply_default_multiplier_64
 
         procedure, pass(rng), private :: pcg_step_for_seeding_64
+        procedure, pass(rng), private :: pcg_random_number_64_rxs_m_32
+        procedure, pass(rng), private :: pcg_random_number_64_rxs_m_xs_64
+        procedure, pass(rng), private :: pcg_random_number_64_xsh_rr_32
         procedure, pass(rng), private :: pcg_random_number_64_xsh_rs_32
 
         procedure(pcg_advance_64_abstract), pass(rng), private, deferred :: advance
@@ -170,6 +184,8 @@ module pcg_fortran
         generic, public  :: default_multiplier => pcg_multiply_default_multiplier_64
         generic, private :: step_for_seeding   => pcg_step_for_seeding_64
 
+        generic, public :: random_number_rxs_m  => pcg_random_number_64_rxs_m_32
+        generic, public :: random_number_xsh_rr => pcg_random_number_64_xsh_rr_32
         generic, public :: random_number_xsh_rs => pcg_random_number_64_xsh_rs_32
 
     end type pcg_state_64_type
@@ -240,6 +256,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: seed       => pcg_seed_8_oneseq
         procedure, pass(rng), private :: step       => pcg_step_8_oneseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_8_rxs_m_xs_8
+
     end type pcg_state_oneseq_8_type
 
 
@@ -258,6 +276,8 @@ module pcg_fortran
         procedure, pass(rng), private :: step       => pcg_step_8_setseq
 
         generic, public :: seed => pcg_seed_8_setseq
+
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_8_rxs_m_xs_8
 
     end type pcg_state_setseq_8_type
 
@@ -301,6 +321,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: seed       => pcg_seed_16_oneseq
         procedure, pass(rng), private :: step       => pcg_step_16_oneseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_16_rxs_m_xs_16
+
     end type pcg_state_oneseq_16_type
 
 
@@ -320,6 +342,8 @@ module pcg_fortran
 
         generic, public :: seed => pcg_seed_16_setseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_16_rxs_m_xs_16
+
     end type pcg_state_setseq_16_type
 
 
@@ -333,6 +357,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_16
         procedure, pass(rng), public  :: seed       => pcg_seed_16_unique
         procedure, pass(rng), private :: step       => pcg_step_16_unique
+
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_16_rxs_m_xs_16
 
     end type pcg_state_unique_16_type
 
@@ -362,6 +388,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: seed       => pcg_seed_32_oneseq
         procedure, pass(rng), private :: step       => pcg_step_32_oneseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_32_rxs_m_xs_32
+
     end type pcg_state_oneseq_32_type
 
 
@@ -381,6 +409,8 @@ module pcg_fortran
 
         generic, public :: seed => pcg_seed_32_setseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_32_rxs_m_xs_32
+
     end type pcg_state_setseq_32_type
 
 
@@ -394,6 +424,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_32
         procedure, pass(rng), public  :: seed       => pcg_seed_32_unique
         procedure, pass(rng), private :: step       => pcg_step_32_unique
+
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_32_rxs_m_xs_32
 
     end type pcg_state_unique_32_type
 
@@ -423,6 +455,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: seed       => pcg_seed_64_oneseq
         procedure, pass(rng), private :: step       => pcg_step_64_oneseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_64_rxs_m_xs_64
+
     end type pcg_state_oneseq_64_type
 
 
@@ -442,6 +476,8 @@ module pcg_fortran
 
         generic, public :: seed => pcg_seed_64_setseq
 
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_64_rxs_m_xs_64
+
     end type pcg_state_setseq_64_type
 
 
@@ -455,6 +491,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: initialize => pcg_initialize_unique_64
         procedure, pass(rng), public  :: seed       => pcg_seed_64_unique
         procedure, pass(rng), private :: step       => pcg_step_64_unique
+
+        generic, public :: random_number_rxs_m_xs => pcg_random_number_64_rxs_m_xs_64
 
     end type pcg_state_unique_64_type
 
@@ -971,6 +1009,177 @@ module pcg_fortran
 
 
 
+    !> Generation `SUBROUTINE`s for `RXS M`
+    interface
+
+        !> `pcg_mcg_16_rxs_m_8_random_r`
+        !> `pcg_oneseq_16_rxs_m_8_random_r`
+        !> `pcg_setseq_16_rxs_m_8_random_r`
+        !> `pcg_unique_16_rxs_m_8_random_r`
+        module subroutine pcg_random_number_16_rxs_m_8(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(out) :: harvest
+
+        end subroutine pcg_random_number_16_rxs_m_8
+
+
+
+        !> `pcg_mcg_32_rxs_m_16_random_r`
+        !> `pcg_oneseq_32_rxs_m_16_random_r`
+        !> `pcg_setseq_32_rxs_m_16_random_r`
+        !> `pcg_unique_32_rxs_m_16_random_r`
+        module subroutine pcg_random_number_32_rxs_m_16(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(out) :: harvest
+
+        end subroutine pcg_random_number_32_rxs_m_16
+
+
+
+        !> `pcg_mcg_64_rxs_m_32_random_r`
+        !> `pcg_oneseq_64_rxs_m_32_random_r`
+        !> `pcg_setseq_64_rxs_m_32_random_r`
+        !> `pcg_unique_64_rxs_m_32_random_r`
+        module subroutine pcg_random_number_64_rxs_m_32(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(out) :: harvest
+
+        end subroutine pcg_random_number_64_rxs_m_32
+
+    end interface
+
+
+
+    !> Generation `SUBROUTINE`s for `RXS M XS`
+    interface
+
+        !> `pcg_oneseq_8_rxs_m_xs_8_random_r`
+        !> `pcg_setseq_8_rxs_m_xs_8_random_r`
+        module subroutine pcg_random_number_8_rxs_m_xs_8(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_8_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(out) :: harvest
+
+        end subroutine pcg_random_number_8_rxs_m_xs_8
+
+
+
+        !> `pcg_oneseq_16_rxs_m_xs_16_random_r`
+        !> `pcg_setseq_16_rxs_m_xs_16_random_r`
+        !> `pcg_unique_16_rxs_m_xs_16_random_r`
+        module subroutine pcg_random_number_16_rxs_m_xs_16(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(out) :: harvest
+
+        end subroutine pcg_random_number_16_rxs_m_xs_16
+
+
+
+        !> `pcg_oneseq_32_rxs_m_xs_32_random_r`
+        !> `pcg_setseq_32_rxs_m_xs_32_random_r`
+        !> `pcg_unique_32_rxs_m_xs_32_random_r`
+        module subroutine pcg_random_number_32_rxs_m_xs_32(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(out) :: harvest
+
+        end subroutine pcg_random_number_32_rxs_m_xs_32
+
+
+
+        !> `pcg_oneseq_64_rxs_m_xs_64_random_r`
+        !> `pcg_setseq_64_rxs_m_xs_64_random_r`
+        !> `pcg_unique_64_rxs_m_xs_64_random_r`
+        module subroutine pcg_random_number_64_rxs_m_xs_64(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(out) :: harvest
+
+        end subroutine pcg_random_number_64_rxs_m_xs_64
+
+    end interface
+
+
+
+    !> Generation `SUBROUTINE`s for `XSH RR`
+    interface
+
+        !> `pcg_mcg_16_xsh_rr_8_random_r`
+        !> `pcg_oneseq_16_xsh_rr_8_random_r`
+        !> `pcg_unique_16_xsh_rr_8_random_r`
+        !> `pcg_setseq_16_xsh_rr_8_random_r`
+        module subroutine pcg_random_number_16_xsh_rr_8(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(out) :: harvest
+
+        end subroutine pcg_random_number_16_xsh_rr_8
+
+
+
+        !> `pcg_mcg_32_xsh_rr_16_random_r`
+        !> `pcg_oneseq_32_xsh_rr_16_random_r`
+        !> `pcg_unique_32_xsh_rr_16_random_r`
+        !> `pcg_setseq_32_xsh_rr_16_random_r`
+        module subroutine pcg_random_number_32_xsh_rr_16(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(out) :: harvest
+
+        end subroutine pcg_random_number_32_xsh_rr_16
+
+
+
+        !> `pcg_mcg_64_xsh_rr_32_random_r`
+        !> `pcg_oneseq_64_xsh_rr_32_random_r`
+        !> `pcg_unique_64_xsh_rr_32_random_r`
+        !> `pcg_setseq_64_xsh_rr_32_random_r`
+        module subroutine pcg_random_number_64_xsh_rr_32(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(out) :: harvest
+
+        end subroutine pcg_random_number_64_xsh_rr_32
+
+    end interface
+
+
+
+    !> Generation `SUBROUTINE`s for `XSH RS`
     interface
 
         !> `pcg_mcg_16_xsh_rs_8_random_r`
