@@ -178,6 +178,7 @@ module pcg_fortran
         procedure, pass(rng), private :: pcg_random_number_64_xsh_rr_32
         procedure, pass(rng), private :: pcg_random_number_64_xsh_rs_32
         procedure, pass(rng), private :: pcg_random_number_64_xsl_rr_32
+        procedure, pass(rng), private :: pcg_random_number_64_xsl_rr_rr_64
 
         procedure(pcg_advance_64_abstract), pass(rng), private, deferred :: advance
 
@@ -457,7 +458,8 @@ module pcg_fortran
         procedure, pass(rng), public  :: seed       => pcg_seed_64_oneseq
         procedure, pass(rng), private :: step       => pcg_step_64_oneseq
 
-        generic, public :: random_number_rxs_m_xs => pcg_random_number_64_rxs_m_xs_64
+        generic, public :: random_number_rxs_m_xs  => pcg_random_number_64_rxs_m_xs_64
+        generic, public :: random_number_xsl_rr_rr => pcg_random_number_64_xsl_rr_rr_64
 
     end type pcg_state_oneseq_64_type
 
@@ -478,7 +480,8 @@ module pcg_fortran
 
         generic, public :: seed => pcg_seed_64_setseq
 
-        generic, public :: random_number_rxs_m_xs => pcg_random_number_64_rxs_m_xs_64
+        generic, public :: random_number_rxs_m_xs  => pcg_random_number_64_rxs_m_xs_64
+        generic, public :: random_number_xsl_rr_rr => pcg_random_number_64_xsl_rr_rr_64
 
     end type pcg_state_setseq_64_type
 
@@ -495,6 +498,7 @@ module pcg_fortran
         procedure, pass(rng), private :: step       => pcg_step_64_unique
 
         generic, public :: random_number_rxs_m_xs => pcg_random_number_64_rxs_m_xs_64
+        generic, public :: random_number_xsl_rr_rr => pcg_random_number_64_xsl_rr_rr_64
 
     end type pcg_state_unique_64_type
 
@@ -1250,6 +1254,26 @@ module pcg_fortran
             integer(int32), intent(out) :: harvest
 
         end subroutine pcg_random_number_64_xsl_rr_32
+
+    end interface
+
+
+
+    !> Generation `SUBROUTINE`s for `XSL RR RR`
+    interface
+
+        !> `pcg_oneseq_64_xsl_rr_rr_64_random_r`
+        !> `pcg_unique_64_xsl_rr_rr_64_random_r`
+        !> `pcg_setseq_64_xsl_rr_rr_64_random_r`
+        module subroutine pcg_random_number_64_xsl_rr_rr_64(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int64), intent(out) :: harvest
+
+        end subroutine pcg_random_number_64_xsl_rr_rr_64
 
     end interface
 
