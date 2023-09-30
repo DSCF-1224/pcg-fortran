@@ -40,7 +40,7 @@
 
 
 
-    #define SIGNED_PCG_RXS_M_RANDOM_R(rng_type, state_size, output_type, output_size) \
+    #define SIGNED_PCG_RANDOM_R_IMPLEMENTATION(rng_type, state_size, output_type, output_size) \
         do { \
             TARGET_PCG_STATE(rng_type, state_size) rng = TARGET_PCG_STATE_INITIALIZER(rng_type, state_size); \
             for (int32_t i = 0; i < harvest_size; i++) \

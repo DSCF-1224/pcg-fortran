@@ -58,7 +58,7 @@ add_executable(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/../../reference/pcg-rngs-16.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../reference/pcg-rngs-32.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../reference/pcg-rngs-64.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pcg_c_interface.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../pcg_random_number/pcg_c_interface.c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pcg_c_interface.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.f90
 )
