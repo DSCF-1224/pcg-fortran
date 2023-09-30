@@ -116,6 +116,7 @@ module pcg_fortran
         procedure, pass(rng), private :: pcg_random_number_16_rxs_m_8
         procedure, pass(rng), private :: pcg_random_number_16_rxs_m_xs_16
         procedure, pass(rng), private :: pcg_random_number_16_xsh_rr_8
+        procedure, pass(rng), private :: pcg_random_number_16_xsh_rs_8
 
         procedure(pcg_advance_16_abstract), pass(rng), private, deferred :: advance
 
@@ -125,6 +126,7 @@ module pcg_fortran
 
         generic, public :: random_number_rxs_m  => pcg_random_number_16_rxs_m_8
         generic, public :: random_number_xsh_rr => pcg_random_number_16_xsh_rr_8
+        generic, public :: random_number_xsh_rs => pcg_random_number_16_xsh_rs_8
 
     end type pcg_state_16_type
 
@@ -144,6 +146,7 @@ module pcg_fortran
         procedure, pass(rng), private :: pcg_random_number_32_rxs_m_16
         procedure, pass(rng), private :: pcg_random_number_32_rxs_m_xs_32
         procedure, pass(rng), private :: pcg_random_number_32_xsh_rr_16
+        procedure, pass(rng), private :: pcg_random_number_32_xsh_rs_16
 
         procedure(pcg_advance_32_abstract), pass(rng), private, deferred :: advance
 
@@ -153,6 +156,7 @@ module pcg_fortran
 
         generic, public :: random_number_rxs_m  => pcg_random_number_32_rxs_m_16
         generic, public :: random_number_xsh_rr => pcg_random_number_32_xsh_rr_16
+        generic, public :: random_number_xsh_rs => pcg_random_number_32_xsh_rs_16
 
     end type pcg_state_32_type
 
@@ -172,6 +176,7 @@ module pcg_fortran
         procedure, pass(rng), private :: pcg_random_number_64_rxs_m_32
         procedure, pass(rng), private :: pcg_random_number_64_rxs_m_xs_64
         procedure, pass(rng), private :: pcg_random_number_64_xsh_rr_32
+        procedure, pass(rng), private :: pcg_random_number_64_xsh_rs_32
 
         procedure(pcg_advance_64_abstract), pass(rng), private, deferred :: advance
 
@@ -181,6 +186,7 @@ module pcg_fortran
 
         generic, public :: random_number_rxs_m  => pcg_random_number_64_rxs_m_32
         generic, public :: random_number_xsh_rr => pcg_random_number_64_xsh_rr_32
+        generic, public :: random_number_xsh_rs => pcg_random_number_64_xsh_rs_32
 
     end type pcg_state_64_type
 
@@ -1168,6 +1174,59 @@ module pcg_fortran
             integer(int32), intent(out) :: harvest
 
         end subroutine pcg_random_number_64_xsh_rr_32
+
+    end interface
+
+
+
+    !> Generation `SUBROUTINE`s for `XSH RS`
+    interface
+
+        !> `pcg_mcg_16_xsh_rs_8_random_r`
+        !> `pcg_oneseq_16_xsh_rs_8_random_r`
+        !> `pcg_unique_16_xsh_rs_8_random_r`
+        !> `pcg_setseq_16_xsh_rs_8_random_r`
+        module subroutine pcg_random_number_16_xsh_rs_8(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_16_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int8), intent(out) :: harvest
+
+        end subroutine pcg_random_number_16_xsh_rs_8
+
+
+
+        !> `pcg_mcg_32_xsh_rs_16_random_r`
+        !> `pcg_oneseq_32_xsh_rs_16_random_r`
+        !> `pcg_unique_32_xsh_rs_16_random_r`
+        !> `pcg_setseq_32_xsh_rs_16_random_r`
+        module subroutine pcg_random_number_32_xsh_rs_16(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_32_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int16), intent(out) :: harvest
+
+        end subroutine pcg_random_number_32_xsh_rs_16
+
+
+
+        !> `pcg_mcg_64_xsh_rs_32_random_r`
+        !> `pcg_oneseq_64_xsh_rs_32_random_r`
+        !> `pcg_unique_64_xsh_rs_32_random_r`
+        !> `pcg_setseq_64_xsh_rs_32_random_r`
+        module subroutine pcg_random_number_64_xsh_rs_32(rng, harvest)
+
+            !> A dummy argument for this SUBROUTINE
+            class(pcg_state_64_type), intent(inout) :: rng
+
+            !> A dummy argument for this SUBROUTINE
+            integer(int32), intent(out) :: harvest
+
+        end subroutine pcg_random_number_64_xsh_rs_32
 
     end interface
 
