@@ -2,11 +2,37 @@ add_library(
     _pcg_fortran_lib
     STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_fortran.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_lcg_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_mcg_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_oneseq_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_setseq_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_advance_unique_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_default_increment_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_default_multiplier_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_initialize_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_rxs_m_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_rxs_m_xs_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsh_rr_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsh_rs_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsl_rr_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_output_xsl_rr_rr_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_random_number_rxs_m_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_random_number_rxs_m_xs_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_random_number_xsh_rr_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_random_number_xsh_rs_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_random_number_xsl_rr_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_random_number_xsl_rr_rr_implementation.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pcg_rotr_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_seed_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_seed_mcg_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_seed_oneseq_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_seed_setseq_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_seed_unique_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_step_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_step_mcg_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_step_oneseq_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_step_setseq_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_step_unique_implementation.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pcg_support_implementation.f90
 )
