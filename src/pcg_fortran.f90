@@ -1012,27 +1012,6 @@ module pcg_fortran
             !> A dummy argument for this SUBROUTINE
             integer(int8), intent(out) :: harvest
 
-        end subroutine pcg_initialize_unique_64
-
-    end subroutine pcg_random_number_16_rxs_m_8
-
-
-
-    !> Generation `SUBROUTINE`s for `RXS M`
-    interface
-
-        !> `pcg_mcg_16_rxs_m_8_random_r`
-        !> `pcg_oneseq_16_rxs_m_8_random_r`
-        !> `pcg_setseq_16_rxs_m_8_random_r`
-        !> `pcg_unique_16_rxs_m_8_random_r`
-        module subroutine pcg_random_number_16_rxs_m_8(rng, harvest)
-
-            !> A dummy argument for this SUBROUTINE
-            class(pcg_state_16_type), intent(inout) :: rng
-
-            !> A dummy argument for this SUBROUTINE
-            integer(int8), intent(out) :: harvest
-
         end subroutine pcg_random_number_16_rxs_m_8
 
 
