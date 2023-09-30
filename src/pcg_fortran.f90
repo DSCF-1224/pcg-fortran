@@ -2173,32 +2173,32 @@ module pcg_fortran
 
         !> A SUBROUTINE for a test: `pcg_output_rxs_m`
         module subroutine test_pcg_output_rxs_m
-        ! There is no dummy arugment for this SUBROUTINE
+        ! There is no dummy argument for this SUBROUTINE
         end subroutine test_pcg_output_rxs_m
 
         !> A SUBROUTINE for a test: `pcg_output_rxs_m_xs`
         module subroutine test_pcg_output_rxs_m_xs
-        ! There is no dummy arugment for this SUBROUTINE
+        ! There is no dummy argument for this SUBROUTINE
         end subroutine test_pcg_output_rxs_m_xs
 
         !> A SUBROUTINE for a test: `pcg_output_xsh_rs`
         module subroutine test_pcg_output_xsh_rs
-        ! There is no dummy arugment for this SUBROUTINE
+        ! There is no dummy argument for this SUBROUTINE
         end subroutine test_pcg_output_xsh_rs
 
         !> A SUBROUTINE for a test: `pcg_output_xsh_rr`
         module subroutine test_pcg_output_xsh_rr
-        ! There is no dummy arugment for this SUBROUTINE
+        ! There is no dummy argument for this SUBROUTINE
         end subroutine test_pcg_output_xsh_rr
 
         !> A SUBROUTINE for a test: `pcg_output_xsl_rr`
         module subroutine test_pcg_output_xsl_rr
-        ! There is no dummy arugment for this SUBROUTINE
+        ! There is no dummy argument for this SUBROUTINE
         end subroutine test_pcg_output_xsl_rr
 
         !> A SUBROUTINE for a test: `pcg_output_xsl_rr_rr`
         module subroutine test_pcg_output_xsl_rr_rr
-        ! There is no dummy arugment for this SUBROUTINE
+        ! There is no dummy argument for this SUBROUTINE
         end subroutine test_pcg_output_xsl_rr_rr
 
 
