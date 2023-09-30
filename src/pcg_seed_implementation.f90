@@ -45,10 +45,7 @@ submodule (pcg_fortran) pcg_seed_implementation
 
 
 
-    subroutine test_pcg_seed_core(rng)
-
-        !> A dummy argument for this SUBROUTINE
-        class(pcg_state_type), intent(inout) :: rng
+    module procedure test_pcg_seed
 
         !> A local variable for this SUBROUTINE
         !> The device number to output the result of this test
@@ -80,306 +77,217 @@ submodule (pcg_fortran) pcg_seed_implementation
 
         select type (rng)
 
-            class is(pcg_state_basic_8_type)
+            class is(pcg_state_8_type)
+            block
 
-                block
+                !> A local variable for this BLOCK
+                integer(int8) :: init_state
 
-                    !> A local variable for this BLOCK
-                    integer(int8) :: init_state
 
 
+                init_state = 0_int8
 
-                    do init_state = 0_int8, (huge(init_state) - 1_int8)
-                        call rng%seed(init_state)
-                        write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
-                    end do
+                do
 
-                    init_state = huge(init_state)
-                    rng%state  = init_state
-                    call rng%seed(init_state)
-                    write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
+                    call test_pcg_seed_core_8(write_unit, init_state, rng)
 
-                    init_state = init_state + 1_int8
-                    rng%state  = init_state
-                    call rng%seed(init_state)
-                    write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
+                    select case(init_state)
+                        case( -1_int8          ) ; exit
+                        case( huge(init_state) ) ; init_state = -1_int8
+                        case default             ; init_state = init_state + 1_int8
+                    end select
 
-                    do init_state = ( - huge(init_state) ), (- 1_int8)
-                        rng%state = init_state
-                        call rng%seed(init_state)
-                        write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
-                    end do
+                end do
 
-                end block
+            end block
 
-            class is(pcg_state_basic_16_type)
+            class is(pcg_state_16_type)
+            block
 
-                block
+                !> A local variable for this BLOCK
+                integer(int16) :: init_state
 
-                    !> A local variable for this BLOCK
-                    integer(int16) :: init_state
 
 
+                init_state = 0_int16
 
-                    do init_state = 0_int16, (huge(init_state) - 1_int16)
-                        call rng%seed(init_state)
-                        write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
-                    end do
+                do
 
-                    init_state = huge(init_state)
-                    rng%state  = init_state
-                    call rng%seed(init_state)
-                    write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
+                    call test_pcg_seed_core_16(write_unit, init_state, rng)
 
-                    init_state = init_state + 1_int16
-                    rng%state  = init_state
-                    call rng%seed(init_state)
-                    write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
+                    select case(init_state)
+                        case( -1_int16         ) ; exit
+                        case( huge(init_state) ) ; init_state = -1_int16
+                        case default             ; init_state = init_state + 1_int16
+                    end select
 
-                    do init_state = ( - huge(init_state) ), (- 1_int16)
-                        rng%state = init_state
-                        call rng%seed(init_state)
-                        write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
-                    end do
+                end do
 
-                end block
+            end block
 
-            class is(pcg_state_basic_32_type)
+            class is(pcg_state_32_type)
+            block
 
-                block
+                !> A local variable for this BLOCK
+                integer(int32) :: init_state
 
-                    !> A local variable for this BLOCK
-                    integer(int32) :: init_state
 
 
+                init_state = 1_int32
 
-                    init_state = 1_int32
+                do
+                    call test_pcg_seed_core_32(write_unit, init_state, rng)
+                    if (init_state .lt. 0_int32) exit
+                    init_state = init_state + init_state
+                end do
 
-                    do
-                        call rng%seed(init_state)
-                        write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
-                        if (init_state .lt. 0_int32) exit
-                        init_state = init_state + init_state
-                    end do
+            end block
 
-                end block
+            class is(pcg_state_64_type)
+            block
 
-            class is(pcg_state_basic_64_type)
+                !> A local variable for this BLOCK
+                integer(int64) :: init_state
 
-                block
 
-                    !> A local variable for this BLOCK
-                    integer(int64) :: init_state
 
+                init_state = 1_int64
 
+                do
+                    call test_pcg_seed_core_64(write_unit, init_state, rng)
+                    if (init_state .lt. 0_int64) exit
+                    init_state = init_state + init_state
+                end do
 
-                    init_state = 1_int64
-
-                    do
-                        call rng%seed(init_state)
-                        write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
-                        if (init_state .lt. 0_int64) exit
-                        init_state = init_state + init_state
-                    end do
-
-                end block
-
-            type is(pcg_state_setseq_8_type)
-
-                block
-
-                    !> A local variable for this BLOCK
-                    integer(int8) :: init_state
-
-
-
-                    do init_state = 0_int8, (huge(init_state) - 1_int8)
-                        call rng%initialize()
-                        call rng%seed(init_state, rng%inc)
-                        write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-                    end do
-
-                    init_state = huge(init_state)
-                    call rng%initialize()
-                    call rng%seed(init_state, rng%inc)
-                    write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-
-                    init_state = init_state + 1_int8
-                    call rng%initialize()
-                    call rng%seed(init_state, rng%inc)
-                    write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-
-                    do init_state = ( - huge(init_state) ), (- 1_int8)
-                        call rng%initialize()
-                        call rng%seed(init_state, rng%inc)
-                        write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-                    end do
-
-                end block
-
-            type is(pcg_state_setseq_16_type)
-
-                block
-
-                    !> A local variable for this BLOCK
-                    integer(int16) :: init_state
-
-
-
-                    do init_state = 0_int16, (huge(init_state) - 1_int16)
-                        call rng%initialize()
-                        call rng%seed(init_state, rng%inc)
-                        write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-                    end do
-
-                    init_state = huge(init_state)
-                    call rng%initialize()
-                    call rng%seed(init_state, rng%inc)
-                    write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-
-                    init_state = init_state + 1_int16
-                    call rng%initialize()
-                    call rng%seed(init_state, rng%inc)
-                    write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-
-                    do init_state = ( - huge(init_state) ), (- 1_int16)
-                        call rng%initialize()
-                        call rng%seed(init_state, rng%inc)
-                        write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-                    end do
-
-                end block
-
-            type is(pcg_state_setseq_32_type)
-
-                block
-
-                    !> A local variable for this BLOCK
-                    integer(int32) :: init_state
-
-
-                    init_state = 1_int32
-
-                    do
-                        call rng%initialize()
-                        call rng%seed(init_state, rng%inc)
-                        write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-                        if (init_state .lt. 0_int32) exit
-                        init_state = init_state + init_state
-                    end do
-
-                end block
-
-            type is(pcg_state_setseq_64_type)
-
-                block
-
-                    !> A local variable for this BLOCK
-                    integer(int64) :: init_state
-
-
-
-                    init_state = 1_int64
-
-                    do
-                        call rng%initialize()
-                        call rng%seed(init_state, rng%inc)
-                        write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
-                        if (init_state .lt. 0_int64) exit
-                        init_state = init_state + init_state
-                    end do
-
-                end block
+            end block
             
         end select
 
 
 
         ! close the used file
-        close(write_unit)       
-
-    end subroutine test_pcg_seed_core
-
-
-
-    module procedure test_pcg_seed
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_mcg_8_type) :: rng_mcg_8
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_mcg_16_type) :: rng_mcg_16
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_mcg_32_type) :: rng_mcg_32
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_mcg_64_type) :: rng_mcg_64
-
-
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_oneseq_8_type) :: rng_oneseq_8
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_oneseq_16_type) :: rng_oneseq_16
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_oneseq_32_type) :: rng_oneseq_32
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_oneseq_64_type) :: rng_oneseq_64
-
-
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_setseq_8_type) :: rng_setseq_8
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_setseq_16_type) :: rng_setseq_16
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_setseq_32_type) :: rng_setseq_32
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_setseq_64_type) :: rng_setseq_64
-
-
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_unique_8_type) :: rng_unique_8
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_unique_16_type) :: rng_unique_16
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_unique_32_type) :: rng_unique_32
-
-        !> A local variable for this SUBROUTINE
-        type(pcg_state_unique_64_type) :: rng_unique_64
-
-
-
-        call test_pcg_seed_core(rng_mcg_8 )
-        call test_pcg_seed_core(rng_mcg_16)
-        call test_pcg_seed_core(rng_mcg_32)
-        call test_pcg_seed_core(rng_mcg_64)
-
-        call test_pcg_seed_core(rng_oneseq_8 )
-        call test_pcg_seed_core(rng_oneseq_16)
-        call test_pcg_seed_core(rng_oneseq_32)
-        call test_pcg_seed_core(rng_oneseq_64)
-
-        call test_pcg_seed_core(rng_setseq_8 )
-        call test_pcg_seed_core(rng_setseq_16)
-        call test_pcg_seed_core(rng_setseq_32)
-        call test_pcg_seed_core(rng_setseq_64)
-
-        call test_pcg_seed_core(rng_unique_8 )
-        call test_pcg_seed_core(rng_unique_16)
-        call test_pcg_seed_core(rng_unique_32)
-        call test_pcg_seed_core(rng_unique_64)
+        close(write_unit)
 
     end procedure test_pcg_seed
+
+
+
+    subroutine test_pcg_seed_core_8(write_unit, init_state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int8), intent(in) :: init_state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_8_type), intent(inout) :: rng
+
+
+
+        select type(rng)
+
+            class is(pcg_state_basic_8_type)
+            call rng%seed(init_state)
+            write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
+
+            type is(pcg_state_setseq_8_type)
+            call rng%initialize()
+            call rng%seed(init_state, rng%inc)
+            write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
+
+        end select
+
+    end subroutine test_pcg_seed_core_8
+
+
+
+    subroutine test_pcg_seed_core_16(write_unit, init_state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int16), intent(in) :: init_state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_16_type), intent(inout) :: rng
+
+
+
+        select type(rng)
+
+            class is(pcg_state_basic_16_type)
+            call rng%seed(init_state)
+            write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
+
+            type is(pcg_state_setseq_16_type)
+            call rng%initialize()
+            call rng%seed(init_state, rng%inc)
+            write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
+
+        end select
+
+    end subroutine test_pcg_seed_core_16
+
+
+
+    subroutine test_pcg_seed_core_32(write_unit, init_state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int32), intent(in) :: init_state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_32_type), intent(inout) :: rng
+
+
+
+        select type(rng)
+
+            class is(pcg_state_basic_32_type)
+            call rng%seed(init_state)
+            write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
+
+            type is(pcg_state_setseq_32_type)
+            call rng%initialize()
+            call rng%seed(init_state, rng%inc)
+            write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
+
+        end select
+
+    end subroutine test_pcg_seed_core_32
+
+
+
+    subroutine test_pcg_seed_core_64(write_unit, init_state, rng)
+
+        !> A dummy argument for this SUBROUTINE
+        integer, intent(in) :: write_unit
+
+        !> A dummy argument for this SUBROUTINE
+        integer(int64), intent(in) :: init_state
+
+        !> A dummy argument for this SUBROUTINE
+        class(pcg_state_64_type), intent(inout) :: rng
+
+
+
+        select type(rng)
+
+            class is(pcg_state_basic_64_type)
+            call rng%seed(init_state)
+            write(write_unit, FMT_WRITE_BASIC) init_state, rng%state
+
+            type is(pcg_state_setseq_64_type)
+            call rng%initialize()
+            call rng%seed(init_state, rng%inc)
+            write(write_unit, FMT_WRITE_SETSEQ) init_state, rng%state, rng%inc
+
+        end select
+
+    end subroutine test_pcg_seed_core_64
 
 end submodule pcg_seed_implementation
