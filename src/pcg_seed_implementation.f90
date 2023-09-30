@@ -88,9 +88,15 @@ submodule (pcg_fortran) pcg_seed_implementation
                 init_state = 0_int8
 
                 do
+
                     call test_pcg_seed_core_8(write_unit, init_state, rng)
-                    if (init_state .eq. -1_int8) exit
-                    init_state = init_state + 1_int8
+
+                    select case(init_state)
+                        case( -1_int8          ) ; exit
+                        case( huge(init_state) ) ; init_state = -1_int8
+                        case default             ; init_state = init_state + 1_int8
+                    end select
+
                 end do
 
             end block
@@ -106,9 +112,15 @@ submodule (pcg_fortran) pcg_seed_implementation
                 init_state = 0_int16
 
                 do
+
                     call test_pcg_seed_core_16(write_unit, init_state, rng)
-                    if (init_state .eq. -1_int16) exit
-                    init_state = init_state + 1_int16
+
+                    select case(init_state)
+                        case( -1_int16         ) ; exit
+                        case( huge(init_state) ) ; init_state = -1_int16
+                        case default             ; init_state = init_state + 1_int16
+                    end select
+
                 end do
 
             end block

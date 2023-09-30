@@ -58,9 +58,15 @@ submodule (pcg_fortran) pcg_step_implementation
                     state = 0_int8
 
                     do
+
                         call test_pcg_step_core_8(write_unit, state, rng)
-                        if (state .eq. -1_int8) exit
-                        state = state + 1_int8
+
+                        select case(state)
+                            case( -1_int8     ) ; exit
+                            case( huge(state) ) ; state = -1_int8
+                            case default        ; state = state + 1_int8
+                        end select
+
                     end do
 
                 end block
@@ -76,9 +82,15 @@ submodule (pcg_fortran) pcg_step_implementation
                     state = 0_int16
 
                     do
+
                         call test_pcg_step_core_16(write_unit, state, rng)
-                        if (state .eq. -1_int16) exit
-                        state = state + 1_int16
+
+                        select case(state)
+                            case( -1_int16    ) ; exit
+                            case( huge(state) ) ; state = -1_int16
+                            case default        ; state = state + 1_int16
+                        end select
+
                     end do
 
                 end block
